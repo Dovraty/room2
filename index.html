@@ -1,0 +1,910 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="Ms. Hagan's weekly TK newsletter for Room 2.">
+<title>Ms. Hagan's TK News</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;700;800&family=Atkinson+Hyperlegible:wght@400;700&family=Patrick+Hand&display=swap">
+<style>
+html{color-scheme:light}body{margin:0}img{max-width:100%}[hidden]{display:none!important}
+/* Layout: a classroom year in one page — week switcher on top, then each week as hero, dated timeline, subject "tables", shelf, small print. */
+:root {
+  --bg: #EEF3EA; --card: #FFFFFF; --ink: #2B1D3A; --muted: #655A73; --line: #D9DFD3;
+  --pumpkin: #EE7417; --pumpkin-deep: #C85A0A; --leaf: #2F8A48; --berry: #CC3B33; --berry-deep: #9E2A24;
+  --sun: #F4B227; --sky: #CFE3F2; --stem: #4E7A2F; --glow: #FFD45C; --chip: #F8EEDF;
+  --font-display: "Baloo 2", "Trebuchet MS", system-ui, sans-serif;
+  --font-body: "Atkinson Hyperlegible", "Segoe UI", system-ui, sans-serif;
+  --font-hand: "Patrick Hand", "Comic Sans MS", cursive;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #1A1424; --card: #261E31; --ink: #F2ECF7; --muted: #B5AAC3; --line: #3A3047;
+    --pumpkin: #FF8A33; --pumpkin-deep: #E06A12; --leaf: #5CC274; --berry: #F06A60; --berry-deep: #C9463D;
+    --sun: #FFC94D; --sky: #2C2840; --stem: #7FB25A; --glow: #FFE07A; --chip: #3A2C24; color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #1A1424; --card: #261E31; --ink: #F2ECF7; --muted: #B5AAC3; --line: #3A3047;
+  --pumpkin: #FF8A33; --pumpkin-deep: #E06A12; --leaf: #5CC274; --berry: #F06A60; --berry-deep: #C9463D;
+  --sun: #FFC94D; --sky: #2C2840; --stem: #7FB25A; --glow: #FFE07A; --chip: #3A2C24; color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+body { background: var(--bg); color: var(--ink); font-family: var(--font-body); font-size: 17px; line-height: 1.55; overflow-x: hidden; }
+body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 10; background: var(--bg); }
+.wrap { max-width: 1080px; margin: 0 auto; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+h1, h2, h3 { font-family: var(--font-display); line-height: 1.05; text-wrap: balance; margin: 0; }
+a { color: var(--pumpkin-deep); }
+:focus-visible { outline: 3px solid var(--pumpkin); outline-offset: 3px; border-radius: 6px; }
+.eyebrow { font-weight: 700; font-size: 0.78rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); }
+.hand { font-family: var(--font-hand); }
+
+#leaves { position: fixed; inset: 0; width: 100%; height: 100%; pointer-events: none; z-index: 0; }
+nav, main { position: relative; z-index: 1; }
+
+/* ---------- Week switcher ---------- */
+.weeknav { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 5; background: var(--bg); border-bottom: 2px solid var(--line); }
+.weeknav .wrap { display: flex; gap: 8px; overflow-x: auto; padding-block: 10px; scrollbar-width: thin; }
+.wk {
+  flex: none; display: grid; gap: 0; text-align: left; cursor: pointer;
+  background: var(--card); color: var(--ink); border: 2px solid var(--line); border-radius: 14px;
+  padding: 6px 14px; font: inherit; line-height: 1.2; transition: border-color .15s, transform .15s;
+}
+.wk:hover { border-color: var(--ink); transform: translateY(-1px); }
+.wk b { font-family: var(--font-display); font-size: 1.05rem; }
+.wk small { color: var(--muted); font-size: .78rem; white-space: nowrap; }
+.wk[aria-current="page"] { background: var(--ink); color: var(--bg); border-color: var(--ink); }
+.wk[aria-current="page"] small { color: var(--bg); opacity: .8; }
+.wk .new { color: var(--pumpkin); }
+.wk[aria-current="page"] .new { color: var(--sun); }
+.wk.info { border-style: dashed; }
+
+/* ---------- Hero ---------- */
+.hero { padding-block: 34px 22px; }
+.hero-grid { display: grid; grid-template-columns: 1.25fr 1fr; gap: 24px; align-items: center; }
+.hero h1 { font-size: clamp(2.5rem, 7vw, 4.8rem); font-weight: 800; letter-spacing: -0.01em; }
+.hero h1 .tk { color: var(--pumpkin); }
+.hero .sub { font-family: var(--font-display); font-size: clamp(1.4rem, 3.5vw, 2rem); font-weight: 700; margin-top: 6px; }
+.week-line { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; margin-top: 14px; }
+.pill { display: inline-flex; align-items: center; gap: 8px; background: var(--card); border: 2px solid var(--ink); border-radius: 999px; padding: 4px 14px; font-weight: 700; font-size: 0.95rem; }
+.pill.week { background: var(--ink); color: var(--bg); }
+.pill.old { border-style: dashed; color: var(--muted); border-color: var(--muted); }
+.next-up { margin-top: 22px; display: inline-flex; gap: 12px; align-items: center; background: var(--chip); border-radius: 16px; padding: 12px 16px; }
+.next-up .dot { width: 12px; height: 12px; border-radius: 50%; background: var(--pumpkin); flex: none; animation: pulse 1.8s ease-in-out infinite; }
+.next-up strong { font-family: var(--font-display); font-size: 1.15rem; }
+@keyframes pulse { 50% { transform: scale(1.5); opacity: .5; } }
+
+.hero-art { position: relative; aspect-ratio: 1 / 1; max-width: 400px; width: 100%; justify-self: center; }
+.hero-art svg { width: 100%; height: 100%; overflow: visible; }
+.jack { transform-origin: 200px 360px; animation: bob 3.6s ease-in-out infinite; }
+@keyframes bob { 0%,100% { transform: rotate(-3deg) translateY(0); } 50% { transform: rotate(3deg) translateY(-8px); } }
+.flicker { animation: flicker 2.4s infinite; }
+@keyframes flicker { 0%,100% { opacity: 1; } 42% { opacity: .82; } 45% { opacity: 1; } 70% { opacity: .9; } }
+.curl { stroke-dasharray: 220; animation: curl 4s ease-in-out infinite alternate; }
+@keyframes curl { from { stroke-dashoffset: 40; } to { stroke-dashoffset: 0; } }
+.shine { animation: shine 3.6s ease-in-out infinite; }
+@keyframes shine { 50% { opacity: .35; } }
+.leafy { transform-box: fill-box; transform-origin: 0% 100%; animation: flutter 2.8s ease-in-out infinite; }
+@keyframes flutter { 50% { transform: rotate(-10deg); } }
+/* Per-week hero motions */
+.cowjump { animation: cowjump 3.2s ease-in-out infinite alternate; }
+@keyframes cowjump { 0% { transform: translate(-120px, 70px) rotate(-18deg); } 50% { transform: translate(0, -40px) rotate(0); } 100% { transform: translate(120px, 70px) rotate(18deg); } }
+.twinkle { transform-box: fill-box; transform-origin: center; animation: twinkle 2s ease-in-out infinite; }
+@keyframes twinkle { 50% { transform: scale(.5); opacity: .4; } }
+.drop { animation: drop 4s ease-in infinite; }
+@keyframes drop { 0%, 35% { transform: translateY(0); opacity: 1; } 60% { transform: translateY(150px); opacity: 1; } 62% { transform: translateY(142px); } 66% { transform: translateY(150px); } 90% { opacity: 1; } 100% { transform: translateY(150px); opacity: 0; } }
+.stack { transform-origin: 200px 380px; animation: stackwob 2.6s ease-in-out infinite; }
+@keyframes stackwob { 0%, 100% { transform: rotate(-4deg); } 50% { transform: rotate(4deg); } }
+.stack .top { transform-box: fill-box; transform-origin: center bottom; animation: stackwob 1.3s ease-in-out infinite reverse; }
+.march { animation: march 9s linear infinite; }
+@keyframes march { from { transform: translateX(0); } to { transform: translateX(440px); } }
+.antleg { transform-box: fill-box; transform-origin: top center; animation: antleg .35s ease-in-out infinite alternate; }
+@keyframes antleg { from { transform: rotate(-18deg); } to { transform: rotate(18deg); } }
+.monkey { animation: monkeyjump 1.1s ease-in-out infinite; }
+@keyframes monkeyjump { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-90px); } }
+.mattress { transform-box: fill-box; transform-origin: center bottom; animation: mattress 1.1s ease-in-out infinite; }
+@keyframes mattress { 0%, 100% { transform: scaleY(.72); } 20%, 80% { transform: scaleY(1); } }
+.arms { transform-box: fill-box; transform-origin: center bottom; animation: arms 1.1s ease-in-out infinite; }
+@keyframes arms { 0%, 100% { transform: scaleY(.85); } 50% { transform: scaleY(1.1); } }
+.rocket { animation: rocket 2.4s ease-in-out infinite; }
+@keyframes rocket { 0%, 100% { transform: translate(0, 0) rotate(-2deg); } 50% { transform: translate(0, -18px) rotate(2deg); } }
+.flame { transform-box: fill-box; transform-origin: center top; animation: flame .18s ease-in-out infinite alternate; }
+@keyframes flame { from { transform: scaleY(.75) scaleX(.95); } to { transform: scaleY(1.1) scaleX(1.05); } }
+.streak { animation: streak 1.2s linear infinite; }
+@keyframes streak { from { transform: translateY(-60px); opacity: 0; } 30% { opacity: .7; } to { transform: translateY(160px); opacity: 0; } }
+.flip { transform-origin: 200px 0; animation: flip 4s ease-in-out infinite; }
+@keyframes flip { 0%, 30% { transform: scaleX(1); } 60%, 100% { transform: scaleX(-1); } }
+.floaty { transform-box: fill-box; transform-origin: center; animation: floaty 4s ease-in-out infinite; }
+@keyframes floaty { 0% { transform: translateY(20px); opacity: 0; } 30% { opacity: 1; } 100% { transform: translateY(-70px) rotate(12deg); opacity: 0; } }
+.speech { position: absolute; top: 4%; right: 0; transform: rotate(6deg); background: var(--card); border: 2px solid var(--ink); border-radius: 18px; padding: 6px 14px; font-family: var(--font-hand); font-size: 1.4rem; color: var(--ink); max-width: 70%; }
+
+/* ---------- Sections ---------- */
+section { padding-block: 30px; }
+.sec-head { display: flex; align-items: end; justify-content: space-between; gap: 16px; flex-wrap: wrap; margin-bottom: 18px; }
+.sec-head h2 { font-size: clamp(1.9rem, 4.4vw, 2.6rem); font-weight: 800; }
+
+.timeline { list-style: none; margin: 0; padding: 0; display: grid; gap: 12px; }
+.ev { display: grid; grid-template-columns: 84px 1fr auto; gap: 16px; align-items: center; background: var(--card); border-radius: 18px; padding: 14px 18px 14px 14px; border: 2px solid transparent; transition: transform .2s ease; }
+.ev:hover { transform: translateX(4px); }
+.ev.next { border-color: var(--pumpkin); }
+.ev.past { opacity: .62; }
+.date-tile { width: 84px; border-radius: 12px; overflow: hidden; text-align: center; border: 2px solid var(--ink); background: var(--card); }
+.date-tile .mo { background: var(--ink); color: var(--bg); font-weight: 700; font-size: .72rem; letter-spacing: .12em; padding: 2px 0; }
+.date-tile .d { font-family: var(--font-display); font-weight: 800; font-size: 1.7rem; line-height: 1.25; font-variant-numeric: tabular-nums; }
+.date-tile .d.range { font-size: 1.1rem; line-height: 2.05; }
+.ev-body { min-width: 0; }
+.ev-body h3 { font-size: 1.3rem; font-weight: 700; }
+.ev-body p { margin: 2px 0 0; color: var(--muted); }
+.todo { display: inline-block; margin-top: 6px; background: var(--chip); color: var(--ink); border-radius: 8px; padding: 2px 10px; font-weight: 700; font-size: .92rem; }
+.status { font-weight: 700; font-size: .85rem; border-radius: 999px; padding: 3px 12px; white-space: nowrap; background: var(--line); color: var(--muted); }
+.status.soon { background: var(--pumpkin); color: #fff; }
+.status.today { background: var(--leaf); color: #fff; }
+
+.learn { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+.subject { background: var(--card); border-radius: 22px; padding: 20px; display: grid; grid-template-columns: 140px 1fr; gap: 18px; align-items: center; }
+.subject.wide { grid-column: 1 / -1; }
+.subject .art { width: 140px; height: 140px; background: var(--sky); border-radius: 18px; display: grid; place-items: center; overflow: hidden; }
+.subject .art svg { width: 100%; height: 100%; }
+.subject > div:last-child { min-width: 0; }
+.subject h3 { font-size: 1.5rem; font-weight: 800; }
+.subject .tag { color: var(--pumpkin-deep); }
+.subject ul { margin: 8px 0 0; padding-left: 18px; }
+.subject li + li { margin-top: 4px; }
+.subject ul ul { margin-top: 4px; }
+.subject p { margin: 6px 0 0; }
+
+.trace { fill: none; stroke: var(--pumpkin); stroke-width: 3; stroke-linejoin: round; stroke-dasharray: 600; animation: trace 5s ease-in-out infinite; }
+.trace-fill { fill: var(--pumpkin); animation: tracefill 5s ease-in-out infinite; }
+@keyframes trace { 0% { stroke-dashoffset: 600; } 55%, 100% { stroke-dashoffset: 0; } }
+@keyframes tracefill { 0%, 55% { opacity: 0; } 70%, 92% { opacity: 1; } 100% { opacity: 0; } }
+.guide { stroke: var(--muted); stroke-width: 1.5; stroke-dasharray: 4 5; opacity: .6; }
+.wob { transform-box: fill-box; transform-origin: center; animation: wobble 3s ease-in-out infinite; }
+.squ { transform-box: fill-box; transform-origin: center; animation: squish 2.6s ease-in-out infinite; }
+@keyframes wobble { 50% { transform: rotate(-8deg) translateY(-4px); } }
+@keyframes squish { 50% { transform: scale(1.12, .9); } }
+.grow { transform-origin: 70px 112px; animation: grow 6s ease-in-out infinite; }
+@keyframes grow { 0% { transform: scale(.25); } 40%, 85% { transform: scale(1); } 100% { transform: scale(.25); } }
+.vine { stroke-dasharray: 120; animation: vine 6s ease-in-out infinite; }
+@keyframes vine { 0% { stroke-dashoffset: 120; } 35%, 85% { stroke-dashoffset: 0; } 100% { stroke-dashoffset: 120; } }
+.lamp-g { animation: glowg 2.4s ease-in-out infinite; }
+@keyframes glowg { 50% { filter: drop-shadow(0 0 10px var(--leaf)); } }
+.hop { transform-box: fill-box; transform-origin: center bottom; animation: hop 1.8s ease-in-out infinite; }
+@keyframes hop { 0%, 60%, 100% { transform: translateY(0); } 30% { transform: translateY(-16px); } }
+.blink { transform-box: fill-box; transform-origin: center; animation: blink 4s infinite; }
+@keyframes blink { 0%, 92%, 100% { transform: scaleY(1); } 95% { transform: scaleY(.1); } }
+.spin-slow { transform-box: fill-box; transform-origin: center; animation: spin 10s linear infinite; }
+.beat { transform-box: fill-box; transform-origin: center; animation: beat 1.4s ease-in-out infinite; }
+.choice-key { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 10px; font-weight: 700; font-size: .92rem; }
+.choice-key span { display: inline-flex; align-items: center; gap: 6px; }
+.choice-key i { width: 12px; height: 12px; border-radius: 50%; display: inline-block; }
+
+.duo { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; align-items: start; }
+.panel { background: var(--card); border-radius: 22px; padding: 22px; min-width: 0; }
+.panel h2 { font-size: 1.9rem; font-weight: 800; margin-bottom: 10px; }
+.panel ul.plain { margin: 0; padding-left: 18px; display: grid; gap: 8px; }
+.panel ul.plain b { color: var(--pumpkin-deep); }
+.clock-row { display: flex; gap: 16px; align-items: center; margin-bottom: 12px; }
+.clock { width: 86px; height: 86px; flex: none; }
+.clock .hand-m { transform-origin: 50px 50px; animation: spin 8s linear infinite; }
+@keyframes spin { to { transform: rotate(360deg); } }
+.big-time { font-family: var(--font-display); font-size: 2.2rem; font-weight: 800; color: var(--pumpkin-deep); line-height: 1; font-variant-numeric: tabular-nums; }
+.thanks { margin-top: 16px; background: var(--chip); border-radius: 14px; padding: 12px 16px; font-family: var(--font-hand); font-size: 1.3rem; line-height: 1.3; }
+
+.shelf { display: flex; align-items: flex-end; gap: 6px; padding: 18px 10px 0; border-bottom: 10px solid var(--pumpkin-deep); border-radius: 0 0 6px 6px; overflow-x: auto; }
+.book { flex: 1 1 0; min-width: 52px; max-width: 90px; border-radius: 6px 6px 2px 2px; padding: 12px 6px; writing-mode: vertical-rl; transform: rotate(180deg); font-family: var(--font-display); font-weight: 700; font-size: .95rem; line-height: 1.1; color: #fff; transition: transform .25s ease; cursor: default; border: 0; text-align: left; }
+.book:hover, .book:focus-visible { transform: rotate(180deg) translateY(14px); }
+.nook { list-style: none; margin: 16px 0 0; padding: 0; display: grid; gap: 10px; }
+.nook li { display: flex; gap: 10px; align-items: baseline; }
+.nook .sw { width: 12px; height: 12px; border-radius: 3px; flex: none; transform: translateY(1px); }
+.nook em { color: var(--muted); font-style: normal; font-size: .92rem; }
+.nook .kind { font-size: .72rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); }
+.rhymes { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 4px; }
+.rhymes span { background: var(--chip); border-radius: 999px; padding: 2px 10px; font-size: .92rem; }
+.chant { display: grid; grid-template-columns: 64px 1fr; gap: 12px; align-items: center; background: var(--chip); border-radius: 14px; padding: 10px 14px; }
+.chant svg { width: 64px; height: 64px; }
+.chant p { margin: 0; font-family: var(--font-hand); font-size: 1.3rem; line-height: 1.25; }
+.nook li.note { display: block; background: var(--sky); border-radius: 14px; padding: 10px 14px; }
+
+.tidbit { margin-block: 8px 36px; background: var(--ink); color: var(--bg); border-radius: 26px; display: grid; grid-template-columns: 1fr auto; gap: 24px; align-items: center; padding: 28px; }
+.tidbit > div:first-child { min-width: 0; }
+.tidbit .eyebrow { color: var(--sun); }
+.tidbit h2 { font-size: clamp(1.7rem, 4vw, 2.4rem); font-weight: 800; margin-top: 6px; }
+.tidbit p { margin: 10px 0 0; max-width: 62ch; opacity: .92; }
+.tidbit blockquote { margin: 14px 0 0; font-family: var(--font-hand); font-size: 1.45rem; line-height: 1.3; max-width: 40ch; }
+.tidbit cite { display: block; margin-top: 6px; font-style: normal; font-size: .9rem; opacity: .8; font-family: var(--font-body); }
+.episodes { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 14px; }
+.episodes span { background: color-mix(in srgb, var(--bg) 14%, transparent); border-radius: 999px; padding: 4px 12px; font-weight: 700; font-size: .92rem; }
+.watch { display: inline-flex; align-items: center; gap: 10px; background: var(--pumpkin); color: #fff; font-weight: 700; text-decoration: none; padding: 14px 20px; border-radius: 999px; white-space: nowrap; }
+.watch:hover { background: var(--pumpkin-deep); }
+.heart { width: 64px; height: 64px; animation: beat 1.4s ease-in-out infinite; }
+@keyframes beat { 0%,100% { transform: scale(1); } 15% { transform: scale(1.15); } 30% { transform: scale(1); } 45% { transform: scale(1.1); } }
+
+/* ---------- Class info ---------- */
+.hello { margin-top: 18px; display: flex; flex-wrap: wrap; gap: 10px; align-items: center; background: var(--chip); border-radius: 16px; padding: 12px 16px; }
+.hello .addr { font-weight: 700; user-select: all; word-break: break-all; }
+.btn { font: inherit; font-weight: 700; font-size: .9rem; cursor: pointer; background: var(--ink); color: var(--bg); border: 0; border-radius: 999px; padding: 6px 14px; }
+.team { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.person { background: var(--card); border-radius: 22px; padding: 22px; display: grid; grid-template-columns: 72px 1fr; gap: 16px; align-items: start; }
+.person > div:last-child { min-width: 0; }
+.avatar { width: 72px; height: 72px; border-radius: 50%; display: grid; place-items: center; font-family: var(--font-display); font-weight: 800; font-size: 1.6rem; color: #fff; }
+.person h3 { font-size: 1.5rem; font-weight: 800; }
+.person .role { color: var(--pumpkin-deep); }
+.person p { margin: 8px 0 0; }
+.person blockquote { margin: 10px 0 0; font-family: var(--font-hand); font-size: 1.3rem; line-height: 1.3; background: var(--chip); border-radius: 14px; padding: 10px 14px; }
+.sched-wrap { overflow-x: auto; }
+.sched { display: grid; grid-template-columns: repeat(5, minmax(120px, 1fr)); gap: 10px; min-width: 620px; }
+.day { background: var(--card); border-radius: 18px; overflow: hidden; text-align: center; border: 2px solid transparent; }
+.day.is-today { border-color: var(--pumpkin); }
+.day .dn { background: var(--ink); color: var(--bg); font-family: var(--font-display); font-weight: 800; padding: 6px 0; letter-spacing: .05em; }
+.day .what { font-family: var(--font-display); font-size: 1.3rem; font-weight: 700; padding: 12px 8px 0; }
+.day .when { color: var(--pumpkin-deep); font-weight: 700; font-variant-numeric: tabular-nums; }
+.day .note2 { color: var(--muted); font-size: .85rem; padding: 4px 10px 14px; }
+.supplies { list-style: none; margin: 0; padding: 0; display: grid; gap: 6px; }
+.supplies label { display: flex; gap: 10px; align-items: flex-start; cursor: pointer; padding: 4px 0; }
+.supplies input { width: 20px; height: 20px; accent-color: var(--leaf); flex: none; margin-top: 3px; }
+.supplies input:checked + span { text-decoration: line-through; color: var(--muted); }
+
+footer { padding-block: 0 40px; color: var(--muted); font-size: .9rem; text-align: center; position: relative; z-index: 1; }
+
+@media (max-width: 860px) { .learn, .duo, .team { grid-template-columns: 1fr; } }
+@media (max-width: 640px) {
+  .hero-grid { grid-template-columns: 1fr; }
+  .hero-art { max-width: 260px; order: -1; }
+  .ev { grid-template-columns: 64px 1fr; }
+  .date-tile { width: 64px; }
+  .date-tile .d { font-size: 1.35rem; }
+  .date-tile .d.range { font-size: .9rem; }
+  .ev .status { grid-column: 2; justify-self: start; }
+  .subject { grid-template-columns: 1fr; }
+  .subject .art { width: 100%; height: 150px; }
+  .tidbit { grid-template-columns: 1fr; }
+  .person { grid-template-columns: 1fr; }
+}
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition: none !important; }
+  .trace { stroke-dashoffset: 0; }
+  .trace-fill { opacity: 1; }
+}
+</style>
+
+</head>
+<body>
+<canvas id="leaves" aria-hidden="true"></canvas>
+<nav class="weeknav" aria-label="Choose a week"><div class="wrap" id="weeknav"></div></nav>
+<main id="view"></main>
+<footer class="wrap" id="foot"></footer>
+
+<script>
+// ===== Content: add a new week at the end of WEEKS each Friday. =====
+const WEEKS = [
+  {
+    n: 3, dates: "Aug. 31–Sept. 4, 2026", theme: "Nursery Rhymes", art: "cowmoon", sky: "stars", bubble: "The cow jumped over the moon!",
+    events: [
+      { d: "2026-09-01", title: "10th Day of School!", detail: "Zero the Hero “visits” the classroom" },
+      { d: "2026-09-07", title: "No school", detail: "Labor Day" },
+      { d: "2026-09-14", end: "2026-09-18", title: "Book Fair Week", detail: "In the library" },
+      { d: "2026-09-18", title: "PTA Movie Night: Madagascar", detail: "6:00–8:30 pm · In the quad" },
+      { d: "2026-09-21", title: "No school", detail: "Rosh Hashanah" },
+      { d: "2026-09-23", end: "2026-09-24", and: true, title: "Reflections Collection", detail: "Optional" }
+    ],
+    learning: [
+      { name: "Language Arts", title: "Songs, names & rhymes", art: { type: "trace", text: "ABC" },
+        items: ["Continued focus on the “Better Alphabet Song”", "Continued first name recognition", "2 weeks of Nursery Rhymes"] },
+      { name: "Math", title: "Sorting & counting", art: { type: "colors", colors: ["#3B9A55", "#3A7BC8", "#8A55C2"] },
+        items: ["Vocab: sorting, same, & different", "Colors: green, blue, and purple", "Count 1–10 with 1-to-1 correspondence"] },
+      { name: "SEL", title: "Following rules", art: { type: "heart" }, items: ["Following rules"] },
+      { name: "Science", title: "Our five senses", art: { type: "senses" },
+        items: ["Continued experiments with smell, taste, sound, touch, and sight"] },
+      { name: "School Supplies", title: "Earning supply badges with Pip", art: { type: "crayons" }, wide: true,
+        text: "So far, Pip the dalmatian stuffie has helped us earn school supply “badges” for learning how to use pencils, colored pencils, crayons, scissors, glue sticks, playdough, dry erase markers, and watercolor paints. This week, we will explore how to use daubers, markers, highlighters, liquid glue, and tempera paint." }
+    ],
+    reminders: { items: [
+      "Please return your library book and Take Home Folder on <b>Wednesday morning</b>.",
+      "Our 3 P.E. classes start this week. Make sure you're dressed appropriately for this class on <b>Mondays, Tuesdays, and Fridays</b>.",
+      "Please consider joining the PTA and contributing to the Wrangler Fund. This amazing school wouldn't be what it is without your support and its partnership with parents!"
+    ] },
+    nook: [
+      { type: "rhymes", title: "Nursery Rhymes", list: ["Little Miss Muffet", "I'm a Little Teapot", "Humpty Dumpty", "Jack & Jill", "The Itsy, Bitsy Spider"] },
+      { type: "book", title: "My Five Senses", author: "Aliki" },
+      { type: "book", title: "I Can Follow the Rules" }
+    ],
+    tidbit: { eyebrow: "TK Tidbit", title: "“Hey Diddle Diddle …”",
+      body: "It's time to bust out those Nursery Rhymes and add them to your nightly story routine! We're focusing on a few for the next 2 weeks, but you're invited to do more at home.",
+      quote: "Nursery rhymes provide an avenue for not only enjoyable language experiences, but also learning patterns, tone, words, and vocabulary in a way that kids learn most readily.", cite: "Education Week Magazine" }
+  },
+  {
+    n: 4, dates: "Sept. 7–11, 2026", theme: "Apple Week", art: "appletree", bubble: "It's Apple Week!",
+    events: [
+      { d: "2026-09-10", title: "Picture Day" },
+      { d: "2026-09-14", end: "2026-09-18", title: "Book Fair Week", detail: "In the library" },
+      { d: "2026-09-18", title: "PTA Movie Night: Madagascar", detail: "6:00–8:30 pm · In the courtyard" },
+      { d: "2026-09-21", title: "No school", detail: "Rosh Hashanah" },
+      { d: "2026-09-23", end: "2026-09-24", and: true, title: "Reflections Art Collection", detail: "Optional" },
+      { d: "2026-09-25", title: "Pep Rally", detail: "8:30–9:00 am · In the courtyard" }
+    ],
+    learning: [
+      { name: "Language Arts", title: "Rhymes & Heggerty", art: { type: "trace", text: "Aa" },
+        items: ["Continued activities with Nursery Rhymes", "It's Apple Week!", "Starting Heggerty Phonemic Awareness. Ask who Harriet Hippo and Henry Hedgehog are!"] },
+      { name: "Math", title: "The number 1", art: { type: "trace", text: "1" },
+        items: ["Objective: Identify and write the number 1.", "Songs: “Color Family Fingers” & “5 Little Ducks”", "Colors: pink and brown"] },
+      { name: "Science", title: "Five senses + apples", art: { type: "apple" }, items: ["Tying in the 5 Senses with Apple Week!"] },
+      { name: "SEL", title: "TK of the Week starts next week!", art: { type: "star" },
+        text: "I'll be modeling how to be the TK (Terrific Kid) of the Week. I'll show students the poster, share bag, song choice, slideshow, etc. You'll receive the information a couple of weeks in advance to prepare. We're excited to get to know each Terrific Kid of Room 2!" }
+    ],
+    reminders: { items: [
+      "Return your library book and Take Home Folder on <b>Wednesday morning</b>.",
+      "Plan a nice outfit for <b>Picture Day</b>. There will be 2 photos: one individual, up close portrait and one full-length class picture on risers.",
+      "The class competition is on its way for the PTA Wrangler Fund! We're in <b>2nd place</b> for TK Families! Let's continue to show our support for our amazing school! Thank you so much!"
+    ] },
+    nook: [
+      { type: "rhymes", title: "Nursery Rhymes", list: ["Little Miss Muffet", "I'm a Little Teapot", "Humpty Dumpty", "Jack & Jill", "The Itsy, Bitsy Spider"] },
+      { type: "song", title: "“5 Little Ducks” Poem/Song" },
+      { type: "chant", num: "1", text: "Just straight down. Then you're done. That's how we write a 1." }
+    ],
+    tidbit: { eyebrow: "TK Tidbit", title: "The Heggerty Program is a game changer for Phonemic Awareness!",
+      quote: "Phonemic awareness is the ability to identify and manipulate individual sounds in spoken words. It is essential for learning to read in an alphabetic writing system and is a strong predictor of early reading success.", cite: "National Center for Literacy" }
+  },
+  {
+    n: 5, dates: "Sept. 14–18, 2026", theme: "Apple Week", art: "applestack", bubble: "Ten apples up on top!",
+    events: [
+      { d: "2026-09-14", end: "2026-09-18", title: "Book Fair Week", detail: "In the library" },
+      { d: "2026-09-18", title: "PTA Movie Night: Madagascar", detail: "6:00–8:30 pm · In the courtyard" },
+      { d: "2026-09-21", title: "No school", detail: "Rosh Hashanah" },
+      { d: "2026-09-23", end: "2026-09-24", and: true, title: "Reflections Art Collection", detail: "Optional" },
+      { d: "2026-09-25", title: "Pep Rally", detail: "8:30–9:00 am · In the courtyard" },
+      { d: "2026-10-02", title: "No school" }
+    ],
+    learning: [
+      { name: "Language Arts", title: "Names, apples & Heggerty", art: { type: "trace", text: "Aa" },
+        items: ["Making progress on name recognition & writing", "It's Apple Week!", "Harriet Hippo and Henry Hedgehog are so impressed about our participation during Heggerty Phonemic Awareness lessons!"] },
+      { name: "Math", title: "Numbers 2 & 3", art: { type: "trace", text: "23" },
+        items: ["Objective: Identify and write the numbers 2 & 3.", "Song: “5 Little Speckled Frogs”"] },
+      { name: "Science", title: "All things apple", art: { type: "apple" },
+        items: ["Tying in with Apple Week: tasting, describing, art, volcanoes, playdoh, physics, & weight lessons"] },
+      { name: "SEL", title: "The 3 Be's", art: { type: "heart" },
+        items: ["Practicing procedures and rules at P.E., the library, art class, and MakerSpace", "Focus on the “3 Be's”: Be Kind, Be Helpful, and Be Safe", "We get to meet our Study Buddies from Mrs. Gifford's 2nd Grade Class on Friday!"] }
+    ],
+    reminders: { items: [
+      "<b>Wednesday morning:</b> Return Take Home Folder and library book.",
+      "We're halfway through the class competition for the PTA Wrangler Fund! Please consider giving to the Wrangler Fund, as our PTA gives back so much to our school!"
+    ] },
+    nook: [
+      { type: "book", title: "Ten Apples Up on Top!", author: "Theo. LeSieg" },
+      { type: "book", title: "How Do Apples Grow?", author: "Betsy Maestro" },
+      { type: "book", title: "Apples for Everyone", author: "Jill Esbaum" },
+      { type: "book", title: "Ten Red Apples", author: "Pat Hutchins" },
+      { type: "song", title: "“Way Up High in the Apple Tree” Song" },
+      { type: "chant", num: "2", text: "Around and back on the railroad track. Choo! Choo! That's how we write a 2, 2, 2." },
+      { type: "chant", num: "3", text: "Around the tree and around the tree. That's how we write a 3." }
+    ],
+    tidbit: { eyebrow: "TK Tidbit", title: "Sharpening Fine Motor Skills",
+      body: "These skills are critical for a child to master to become independent in daily tasks, not just writing. So much of what we do in TK might seem simple, but it's actually intentional practice of these vital hand, wrist and finger functions:",
+      chips: ["reach", "touch", "point", "grasp", "place", "release", "twist", "pull", "push", "tap", "squeeze", "shake"], cite: "Dr. Eric Haughton" }
+  },
+  {
+    n: 6, dates: "Sept. 21–25, 2026", theme: "“A” Week", art: "ants", bubble: "The ants go marching!",
+    events: [
+      { d: "2026-09-23", end: "2026-09-24", and: true, title: "Reflections Art Collection", detail: "Optional" },
+      { d: "2026-09-25", title: "Pep Rally", detail: "8:30–9:00 am · In the courtyard" },
+      { d: "2026-10-02", title: "No school" },
+      { d: "2026-10-07", title: "Walk to School Day" },
+      { d: "2026-10-12", end: "2026-10-16", title: "Parent-Teacher Conferences", detail: "TK–5th Gr. Minimum Day Dismissal @ 12:30 pm" },
+      { d: "2026-10-16", title: "PTA Fall Festival", detail: "5:00–8:00 pm" }
+    ],
+    learning: [
+      { name: "Language Arts", title: "It's “A” Week!", art: { type: "trace", text: "Aa" },
+        items: ["Uppercase and lowercase letter “A”", "Point out all of the things that start with “A”! Practice how to write an uppercase and lowercase “Aa”.", "Song: “The Ants Go Marching”"] },
+      { name: "Math", title: "The number 4", art: { type: "trace", text: "4" },
+        items: ["Objective: Identify and write the number 4.", "Song: “10 Little Dinosaurs”"] },
+      { name: "SEL", title: "Manners are Magical", art: { type: "star" }, wide: true,
+        text: "We will be reading a short story that reinforces the following things: waiting patiently for our turn to talk, listening when others are talking, raising your hand, and sharing. We'll also talk about when to say, “Please, thank you, and sorry”." }
+    ],
+    reminders: { items: [
+      "<b>Wednesday morning:</b> Return Take Home Folder and library book.",
+      "We're tied for <b>3rd place</b> in the PTA Wrangler Fund! Way to go, Room 2! The competition ends Friday!"
+    ] },
+    nook: [
+      { type: "book", title: "There's an Alligator Under My Bed", author: "Mercer Mayer" },
+      { type: "book", title: "Hey, Little Ant", author: "Phillip & Hannah Hoose" },
+      { type: "chant", num: "4", text: "Down and over. Down once more. That's how we write a 4." },
+      { type: "note", title: "Schoolwide Reading Log", text: "Look for the green sheet in your folder. Please record each book title that you read to your child on your log. (Don't worry about page numbers; just add 1 point per picture book.) There's a grade level competition for the most points!" }
+    ],
+    tidbit: { eyebrow: "TK Tidbit", title: "Words to teach by",
+      quote: "Education is not the filling of a bucket, but the lighting of a fire.", cite: "W.B. Yeats" }
+  },
+  {
+    n: 7, dates: "Sept. 28–Oct. 2, 2026", theme: "“M” Week", art: "monkey", bubble: "No more monkeys jumping on the bed!",
+    events: [
+      { d: "2026-10-02", title: "No school" },
+      { d: "2026-10-07", title: "Walk to School Day" },
+      { d: "2026-10-12", end: "2026-10-16", title: "Parent-Teacher Conferences", detail: "TK–5th Gr. Minimum Day Dismissal @ 12:30 pm" },
+      { d: "2026-10-16", title: "PTA Fall Festival", detail: "5:00–8:00 pm · Get your $20 presale tickets!" },
+      { d: "2026-10-21", title: "Unity Day", detail: "Wear orange for National Bully Prevention", todo: "Reading logs due" },
+      { d: "2026-10-23", title: "Pep Rally", detail: "8:30–9:00 am · In the courtyard" }
+    ],
+    learning: [
+      { name: "Language Arts", title: "It's “M” Week!", art: { type: "trace", text: "Mm" },
+        items: ["Uppercase and lowercase letter “M”", "Point out all of the things that start with “M”! Practice how to write an uppercase and lowercase “Mm”.", "Song: “5 Little Monkeys Jumping on the Bed”", "Hand clapping game: “Miss Mary Mack”"] },
+      { name: "Math", title: "5, then shapes", art: { type: "shapes", learned: [], focus: ["square"] },
+        items: ["Wrap up Unit 1 with Lesson 1.10: Identify and write the number 5.", "Start Unit 2: 2-D Shapes. Lesson 2.1: Squares"] },
+      { name: "SEL", title: "Smooth transitions", art: { type: "heart" }, wide: true,
+        text: "Transitions can be really tough for this age group. We'll continue modeling how to move between activities, clean up, and be aware of others sharing the same space." }
+    ],
+    reminders: { items: [
+      "<b>Wednesday morning:</b> Return Take Home Folder and library book.",
+      "Continue to write down the books you are reading to your child on the green <b>Wild About Reading Log</b>!"
+    ] },
+    nook: [
+      { type: "book", title: "If You Give a Moose a Muffin", author: "Laura Numeroff" },
+      { type: "book", title: "Mouse Paint", author: "Ellen Stoll Walsh" },
+      { type: "book", title: "The Muffin Man" },
+      { type: "book", title: "Little Miss Muffet" },
+      { type: "book", title: "Mr. Brown Can Moo! Can You?", author: "Dr. Seuss" },
+      { type: "chant", num: "5", text: "Short neck down. Belly fat. Mr. Five wears a hat." }
+    ],
+    tidbit: { eyebrow: "TK Tidbit", title: "A garden of kids",
+      quote: "Every child is a different kind of flower, and all together, they make this world beautiful." }
+  },
+  {
+    n: 8, dates: "Oct. 5–9, 2026", theme: "“S” Week", art: "rocket", sky: "stars", bubble: "Zoom, zoom, zoom!",
+    events: [
+      { d: "2026-10-07", title: "Walk to School Day" },
+      { d: "2026-10-12", end: "2026-10-16", title: "Parent-Teacher Conferences", detail: "TK–5th Gr. Minimum Day Dismissal @ 12:30 pm" },
+      { d: "2026-10-16", title: "PTA Fall Festival", detail: "5:00–8:00 pm · Get your $20 presale tickets!" },
+      { d: "2026-10-21", title: "Unity Day", detail: "Wear orange for National Bully Prevention", todo: "Reading logs due" },
+      { d: "2026-10-23", title: "Pep Rally", detail: "8:30–9:00 am · In the courtyard" }
+    ],
+    learning: [
+      { name: "Language Arts", title: "It's “S” Week!", art: { type: "trace", text: "Ss" },
+        items: ["Uppercase & lowercase letter “S”", "What starts with “S”? Practice how to write an uppercase and lowercase “Ss”.", "Song: “Shake My Sillies Out”", "Fingerplay: “Zoom Zoom Zoom, We're Going to the Moon” for Space Theme"] },
+      { name: "Math", title: "Triangles & circles", art: { type: "shapes", learned: ["square"], focus: ["triangle", "circle"] },
+        text: "Last week, we learned about the properties of a square. This week, we are learning how to identify a triangle and circle." },
+      { name: "SEL", title: "Green and red choices", art: { type: "light" }, choices: true, wide: true,
+        text: "Please refer to the parent note in your child's folder. Green choices are positive decisions that keep us safe and respectful as a “go ahead” type of behavior, whereas red choices should be “stopped” because they are not safe or respectful." }
+    ],
+    reminders: { items: [
+      "<b>Wednesday:</b> Police officers will be on campus to greet students for Walk to School Day.",
+      "<b>Thursday:</b> Student Council Spirit Day: National Cowboy Boots Day.",
+      "<b>Friday:</b> As a reward for meeting family participation in the Wrangler Fund, students get a Wildlife Learning Assembly!"
+    ] },
+    nook: [
+      { type: "book", title: "Scaredy Cat, Splat!", author: "Rob Scotton" },
+      { type: "book", title: "Pete the Cat: I Love My White Shoes", author: "Eric Litwin" },
+      { type: "book", title: "You Are (Not) Small", author: "Anna Kang" },
+      { type: "book", title: "Scaredy Squirrel Makes a Friend", author: "Mélanie Watt" },
+      { type: "song", title: "“Sun, Moon, and Stars” Song" }
+    ],
+    tidbit: { eyebrow: "TK Tidbit", title: "All-time favorite online resources",
+      chips: ["Story Bots", "Numberblocks", "Super Simple Songs", "The Singing Walrus", "Jack Hartmann songs", "The Learning Station"] }
+  },
+  {
+    n: 9, dates: "Oct. 12–16, 2026", theme: "“P” Week", art: "pumpkin", bubble: "P is for Pumpkin!",
+    events: [
+      { d: "2026-10-12", end: "2026-10-16", title: "Parent-Teacher Conferences" },
+      { d: "2026-10-16", title: "PTA Fall Festival", detail: "5:00–8:00 pm" },
+      { d: "2026-10-21", title: "Unity Day", detail: "Wear orange for National Bully Prevention", todo: "Reading logs due. An extra log went home in case you need more space." },
+      { d: "2026-10-23", title: "Pep Rally", detail: "8:30–9:00 am · In the courtyard" },
+      { d: "2026-10-30", title: "Halloween Parade", detail: "Parade 8:30–9:30 am · Party 12:00–1:00 pm" }
+    ],
+    learning: [
+      { name: "Language Arts", title: "It's “P” Week!", art: { type: "trace", text: "Pp" },
+        items: ["Uppercase & lowercase letter “P”", "What starts with “P”? Practice how to write an uppercase and lowercase “Pp”.", "Song: “Peanutbutter and Jelly”"] },
+      { name: "Math", title: "Rectangles & ovals", art: { type: "shapes", learned: ["square", "triangle", "circle"], focus: ["rectangle", "oval"] },
+        text: "Now that we've learned about squares, triangles, and circles, we're focusing on rectangles and ovals this week." },
+      { name: "Science", title: "All about pumpkins", art: { type: "pumpkin" }, text: "We're learning about pumpkins!" },
+      { name: "SEL", title: "Green and red choices", art: { type: "light" }, choices: true,
+        text: "We're continuing the discussion on making green choices. We want to make green choices a consistent habit to keep the classroom a safe and respectful place to learn, grow, and play!" }
+    ],
+    reminders: { clock: "12:30 pm", clockNote: "Minimum Day Dismissal this week, every afternoon.",
+      items: ["Our recess and lunch schedule will remain the same."],
+      note: "Thank you SO much for stepping up to the plate to get materials for our upcoming lessons!!!" },
+    nook: [
+      { type: "book", title: "If You Give a Pig a Pancake", author: "Laura Numeroff" },
+      { type: "book", title: "Panda Bear, Panda Bear, What Do You See?", author: "Bill Martin Jr. & Eric Carle" },
+      { type: "book", title: "Pinkalicious!", author: "Victoria & Elizabeth Kann" },
+      { type: "book", title: "The Pigeon Wants a Puppy!", author: "Mo Willems" },
+      { type: "book", title: "Pumpkins" },
+      { type: "book", title: "Splat the Cat and the Pumpkin-Picking Plan", author: "Rob Scotton" }
+    ],
+    tidbit: { eyebrow: "TK Tidbit · A different kind of children's show", title: "Check out Miss Bridget's Life Skills",
+      body: "This YouTube channel focuses on practical life skills that help kids grow with confidence, kindness, and independence. Each episode introduces everyday lessons that teach children how to navigate the world safely and thoughtfully.",
+      chips: ["Voice Volume", "Personal Space", "Feeling Sick"],
+      link: { href: "https://www.youtube.com/results?search_query=Miss+Bridget%27s+Life+Skills", label: "Find it on YouTube ↗" } }
+  }
+];
+
+const INFO = {
+  email: "nhagan@conejousd.org",
+  team: [
+    { name: "Ms. Natalie Hagan", role: "TK Teacher", initials: "NH", color: "var(--pumpkin-deep)",
+      bio: ["I'm thrilled to be your child's TK teacher! I can truly say that I've been in your shoes as my son completed his TK year at Lang last year. It's a fabulous year of growth and discovery!",
+            "I've taught 1st, 2nd, 3rd, and 5th grade over my past 22 year career as a teacher in this district. I love to travel, read, watch movies, go to concerts, and cheer on the SF 49ers!",
+            "One of the best parts of my job is igniting a passion for learning and connecting with my students and their families. I'm honored to be your child's first school experience at The Ranch and thank you for entrusting me with your child's education. It's going to be a wonderful year!"] },
+    { name: "Mrs. Robin Sherrill", role: "TK Aide", initials: "RS", color: "var(--leaf)",
+      bio: ["Room 2 is so fortunate to have Mrs. Sherrill as our TK Aide! She has 10 years of experience working at Lang, first as a CSA and then in this position for 6 years.",
+            "She has a son and a daughter who are both alums of Lang and are now working on getting their Masters in Engineering! She also enjoys traveling, reading, and playing pickleball."],
+      quote: "I love TK because we get to actively learn and explore about the world together. Every child brings something special and I love to watch him/her grow and shine." }
+  ],
+  schedule: [
+    { day: "MON.", what: "P.E.", when: "9:50 am" },
+    { day: "TUES.", what: "P.E.", when: "10:30 am" },
+    { day: "WED.", what: "Library", when: "9:50 am", note: "Return your book weekly." },
+    { day: "THURS.", what: "MakerSpace", note: "7 visits per year" },
+    { day: "FRI.", what: "P.E.", when: "9:50 am" }
+  ],
+  supplies: ["6 Elmer's Glue Sticks", "1 pk Crayola Twistable Crayons", "1 pk black, thin Expo markers", "1 pk Crayola washable markers",
+             "1 pk black, fine point Sharpies", "1 pk of Crayola colored pencils", "1 Crayola watercolor paint set", "1 pk of stickers",
+             "TK Portfolio: a 1½ in. clearview binder. Any color!"],
+  lunch: ["Bookmark and print out the free lunch menu on CVUSD's Child Nutrition page if your child wants to order from Choice 1 or Choice 2.",
+          "There's also an option to order the “Breakfast Snack” for our 1st recess.",
+          "Mark the clipboard or email me your child's order."]
+};
+
+// ===== Rendering =====
+const esc = s => String(s).replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+const MONTHS = ["JAN","FEB","MAR","APR","MAY","JUN","JUL","AUG","SEP","OCT","NOV","DEC"];
+const parse = s => { const [y, m, d] = s.split("-").map(Number); return new Date(y, m - 1, d); };
+const today = new Date(); today.setHours(0, 0, 0, 0);
+const DAY = 86400000;
+const LATEST = WEEKS[WEEKS.length - 1];
+const SPINES = ["#C2457A", "#2E6F8E", "#D9701C", "#3B8F6A", "#5A4A8C", "#B5542F", "#D9579B", "#46708A"];
+
+function statusFor(ev) {
+  const s = parse(ev.d), e = parse(ev.end || ev.d);
+  if (today > e) return { cls: "past", label: "Done" };
+  if (today >= s) return { cls: "today", label: "Today" };
+  const n = Math.round((s - today) / DAY);
+  return { cls: "soon", label: n === 1 ? "Tomorrow" : `In ${n} days` };
+}
+function nextEvent() {
+  for (const ev of LATEST.events) { const st = statusFor(ev); if (st.cls !== "past") return { ev, st }; }
+  return null;
+}
+
+// --- Illustrations ---
+const HERO_PUMPKIN = `
+  <ellipse cx="200" cy="372" rx="130" ry="14" fill="var(--line)"/>
+  <g class="jack">
+    <path class="curl" d="M212 92 C 236 70, 262 92, 246 106 C 234 116, 226 98, 244 86" fill="none" stroke="var(--stem)" stroke-width="5" stroke-linecap="round"/>
+    <path d="M150 108 C 170 92, 186 104, 196 112 C 188 96, 172 80, 150 108 Z" fill="var(--stem)"/>
+    <ellipse cx="128" cy="236" rx="74" ry="122" fill="var(--pumpkin-deep)"/>
+    <ellipse cx="272" cy="236" rx="74" ry="122" fill="var(--pumpkin-deep)"/>
+    <ellipse cx="162" cy="236" rx="70" ry="128" fill="var(--pumpkin)"/>
+    <ellipse cx="238" cy="236" rx="70" ry="128" fill="var(--pumpkin)"/>
+    <ellipse cx="200" cy="236" rx="62" ry="132" fill="var(--pumpkin)"/>
+    <path d="M200 106 C 192 140, 192 330, 200 366" stroke="var(--pumpkin-deep)" stroke-width="3" fill="none" opacity=".5"/>
+    <path d="M150 116 C 120 160, 120 320, 150 356" stroke="var(--pumpkin-deep)" stroke-width="3" fill="none" opacity=".5"/>
+    <path d="M250 116 C 280 160, 280 320, 250 356" stroke="var(--pumpkin-deep)" stroke-width="3" fill="none" opacity=".5"/>
+    <rect x="188" y="78" width="22" height="40" rx="6" fill="var(--stem)"/>
+    <g class="flicker" fill="var(--glow)">
+      <path d="M128 210 L162 166 L182 214 Z"/><path d="M218 214 L238 166 L272 210 Z"/>
+      <path d="M120 262 C 150 330, 250 330, 280 262 L258 270 L244 290 L226 274 L200 296 L174 274 L156 290 L142 270 Z"/>
+    </g>
+  </g>`;
+const HERO_APPLE = `
+  <ellipse cx="200" cy="372" rx="120" ry="14" fill="var(--line)"/>
+  <g class="jack">
+    <path d="M200 132 C 150 92, 64 118, 70 222 C 76 318, 148 380, 200 352 C 252 380, 324 318, 330 222 C 336 118, 250 92, 200 132 Z" fill="var(--berry)"/>
+    <path d="M200 132 C 230 110, 290 116, 312 170 C 300 140, 250 126, 214 146 Z" fill="var(--berry-deep)" opacity=".45"/>
+    <path d="M200 140 C 196 230, 196 300, 200 350" stroke="var(--berry-deep)" stroke-width="3" fill="none" opacity=".35"/>
+    <ellipse class="shine" cx="132" cy="190" rx="18" ry="38" transform="rotate(20 132 190)" fill="#fff" opacity=".55"/>
+    <path d="M198 136 C 196 112, 200 92, 214 72" stroke="var(--ink)" stroke-width="9" fill="none" stroke-linecap="round"/>
+    <path class="leafy" d="M212 86 C 236 52, 282 52, 296 66 C 276 96, 236 102, 212 86 Z" fill="var(--stem)"/>
+  </g>`;
+const APPLE = (x, y, s, cls = "") => `<g transform="translate(${x} ${y}) scale(${s})"><g class="${cls}">
+  <path d="M0 -38 C -18 -54, -58 -44, -56 -4 C -54 34, -22 58, 0 46 C 22 58, 54 34, 56 -4 C 58 -44, 18 -54, 0 -38 Z" fill="var(--berry)" stroke="var(--ink)" stroke-width="${3 / s}"/>
+  <path d="M0 -38 C 0 -48, 2 -56, 8 -62" stroke="var(--ink)" stroke-width="${5 / s}" fill="none" stroke-linecap="round"/>
+  <path d="M6 -56 C 16 -70, 34 -68, 38 -60 C 28 -50, 14 -50, 6 -56 Z" fill="var(--stem)"/>
+  <ellipse cx="-30" cy="-10" rx="6" ry="14" fill="#fff" opacity=".5"/></g></g>`;
+const STARS = pts => pts.map(([x, y, r], i) => `<path class="twinkle" style="animation-delay:${i * .3}s" d="M${x} ${y - r} L${x + r * .3} ${y - r * .3} L${x + r} ${y} L${x + r * .3} ${y + r * .3} L${x} ${y + r} L${x - r * .3} ${y + r * .3} L${x - r} ${y} L${x - r * .3} ${y - r * .3} Z" fill="var(--sun)"/>`).join("");
+const ANT = x => `<g transform="translate(${x} 0)">
+  <g stroke="var(--ink)" stroke-width="3" stroke-linecap="round"><line class="antleg" x1="-6" y1="2" x2="-12" y2="16"/><line class="antleg" style="animation-direction:alternate-reverse" x1="0" y1="2" x2="0" y2="17"/><line class="antleg" x1="6" y1="2" x2="12" y2="16"/>
+  <line x1="24" y1="-12" x2="32" y2="-26"/><line x1="28" y1="-10" x2="40" y2="-20"/></g>
+  <circle cx="-18" cy="0" r="10" fill="var(--ink)"/><circle cx="0" cy="-1" r="7" fill="var(--ink)"/><circle cx="20" cy="-5" r="11" fill="var(--ink)"/><circle cx="24" cy="-8" r="2.5" fill="#fff"/></g>`;
+const HEROES = {
+  pumpkin: HERO_PUMPKIN,
+  // Week 3: Hey Diddle Diddle, the cow jumped over the moon
+  cowmoon: `${STARS([[60, 70, 12], [340, 60, 9], [90, 300, 8], [330, 320, 11], [40, 190, 7]])}
+    <path d="M230 80 A125 125 0 1 0 230 330 A98 125 0 1 1 230 80 Z" fill="var(--glow)" stroke="var(--ink)" stroke-width="4"/>
+    <g class="cowjump"><g transform="translate(0 -20)">
+      <g stroke="var(--ink)" stroke-width="7" stroke-linecap="round"><line x1="170" y1="218" x2="146" y2="246"/><line x1="186" y1="222" x2="172" y2="252"/><line x1="222" y1="222" x2="244" y2="248"/><line x1="236" y1="216" x2="264" y2="238"/></g>
+      <ellipse cx="204" cy="200" rx="52" ry="30" fill="#fff" stroke="var(--ink)" stroke-width="4"/>
+      <ellipse cx="190" cy="192" rx="14" ry="10" fill="var(--ink)"/><ellipse cx="222" cy="210" rx="10" ry="7" fill="var(--ink)"/>
+      <path d="M154 196 C 136 186, 132 172, 140 164" stroke="var(--ink)" stroke-width="4" fill="none" stroke-linecap="round"/>
+      <ellipse cx="262" cy="182" rx="22" ry="18" fill="#fff" stroke="var(--ink)" stroke-width="4"/>
+      <ellipse cx="276" cy="190" rx="12" ry="9" fill="#F4A7B9" stroke="var(--ink)" stroke-width="3"/>
+      <circle cx="258" cy="176" r="3.5" fill="var(--ink)"/>
+      <path d="M248 166 L242 152 M266 164 L270 150" stroke="var(--ink)" stroke-width="4" stroke-linecap="round"/>
+    </g></g>`,
+  // Week 4: Apple Week, apples on the tree
+  appletree: `<ellipse cx="200" cy="372" rx="140" ry="14" fill="var(--line)"/>
+    <rect x="182" y="210" width="36" height="160" rx="10" fill="#8A5A2B" stroke="var(--ink)" stroke-width="4"/>
+    <circle cx="120" cy="190" r="72" fill="var(--leaf)" stroke="var(--ink)" stroke-width="4"/><circle cx="280" cy="190" r="72" fill="var(--leaf)" stroke="var(--ink)" stroke-width="4"/>
+    <circle cx="200" cy="140" r="96" fill="var(--leaf)" stroke="var(--ink)" stroke-width="4"/>
+    <circle cx="150" cy="200" r="60" fill="var(--leaf)"/><circle cx="250" cy="200" r="60" fill="var(--leaf)"/>
+    ${APPLE(150, 120, .32)}${APPLE(240, 100, .32)}${APPLE(110, 200, .32)}${APPLE(290, 190, .32)}${APPLE(200, 190, .32)}
+    <g class="drop">${APPLE(250, 220, .32)}</g>`,
+  // Week 5: Ten Apples Up on Top!
+  applestack: `<ellipse cx="200" cy="384" rx="110" ry="12" fill="var(--line)"/>
+    <g class="stack">${APPLE(200, 318, 1.15)}${APPLE(200, 196, .95)}<g class="top">${APPLE(200, 96, .78)}</g></g>`,
+  // Week 6: "A" Week, The Ants Go Marching
+  ants: `<defs><clipPath id="antclip"><rect x="0" y="0" width="400" height="400"/></clipPath></defs>
+    <text x="200" y="300" text-anchor="middle" font-family="Baloo 2, sans-serif" font-weight="800" font-size="300" fill="var(--pumpkin)" stroke="var(--ink)" stroke-width="6" paint-order="stroke">A</text>
+    <rect x="10" y="352" width="380" height="8" rx="4" fill="var(--stem)" opacity=".6"/>
+    <g clip-path="url(#antclip)"><g transform="translate(-260 336)"><g class="march">${[0, 70, 140, 210, 280, 350].map(ANT).join("")}</g></g></g>`,
+  // Week 7: 5 Little Monkeys Jumping on the Bed
+  monkey: `<ellipse cx="200" cy="378" rx="150" ry="12" fill="var(--line)"/>
+    <rect x="60" y="220" width="30" height="150" rx="8" fill="var(--pumpkin-deep)" stroke="var(--ink)" stroke-width="4"/>
+    <rect x="310" y="270" width="30" height="100" rx="8" fill="var(--pumpkin-deep)" stroke="var(--ink)" stroke-width="4"/>
+    <rect x="78" y="316" width="250" height="20" fill="var(--ink)"/>
+    <rect class="mattress" x="78" y="286" width="250" height="34" rx="12" fill="var(--sky)" stroke="var(--ink)" stroke-width="4"/>
+    <ellipse cx="116" cy="282" rx="28" ry="14" fill="#fff" stroke="var(--ink)" stroke-width="3"/>
+    <g class="monkey">
+      <path d="M232 262 C 278 270, 280 214, 252 206" stroke="#8A5A2B" stroke-width="8" fill="none" stroke-linecap="round"/>
+      <g stroke="#8A5A2B" stroke-width="12" stroke-linecap="round"><line x1="188" y1="276" x2="180" y2="290"/><line x1="212" y1="276" x2="220" y2="290"/></g>
+      <g class="arms" stroke="#8A5A2B" stroke-width="12" stroke-linecap="round"><line x1="174" y1="228" x2="144" y2="188"/><line x1="226" y1="228" x2="256" y2="188"/></g>
+      <ellipse cx="200" cy="244" rx="32" ry="38" fill="#8A5A2B"/><ellipse cx="200" cy="252" rx="19" ry="24" fill="#E8C49A"/>
+      <circle cx="166" cy="176" r="13" fill="#8A5A2B"/><circle cx="234" cy="176" r="13" fill="#8A5A2B"/>
+      <circle cx="166" cy="176" r="6" fill="#E8C49A"/><circle cx="234" cy="176" r="6" fill="#E8C49A"/>
+      <circle cx="200" cy="176" r="34" fill="#8A5A2B"/><ellipse cx="200" cy="188" rx="24" ry="19" fill="#E8C49A"/>
+      <circle cx="190" cy="172" r="4" fill="#2B1D3A"/><circle cx="210" cy="172" r="4" fill="#2B1D3A"/>
+      <path d="M188 192 Q 200 204 212 192" stroke="#2B1D3A" stroke-width="3" fill="none" stroke-linecap="round"/>
+    </g>`,
+  // Week 8: "S" Week, Zoom Zoom Zoom, We're Going to the Moon
+  rocket: `${STARS([[50, 60, 10], [120, 30, 7], [350, 200, 9], [40, 260, 8], [360, 320, 11], [80, 160, 6]])}
+    <circle cx="320" cy="80" r="46" fill="var(--line)" stroke="var(--ink)" stroke-width="4"/>
+    <circle cx="304" cy="70" r="8" fill="var(--muted)" opacity=".4"/><circle cx="334" cy="96" r="11" fill="var(--muted)" opacity=".4"/>
+    <g stroke="var(--muted)" stroke-width="3" stroke-linecap="round"><line class="streak" x1="130" y1="200" x2="130" y2="240"/><line class="streak" style="animation-delay:.4s" x1="270" y1="220" x2="270" y2="260"/><line class="streak" style="animation-delay:.8s" x1="110" y1="290" x2="110" y2="320"/></g>
+    <g class="rocket">
+      <g class="flame"><path d="M172 286 Q 200 390 228 286 Z" fill="var(--pumpkin)"/><path d="M186 286 Q 200 350 214 286 Z" fill="var(--sun)"/></g>
+      <path d="M162 232 L118 304 L166 286 Z" fill="var(--berry)" stroke="var(--ink)" stroke-width="4" stroke-linejoin="round"/>
+      <path d="M238 232 L282 304 L234 286 Z" fill="var(--berry)" stroke="var(--ink)" stroke-width="4" stroke-linejoin="round"/>
+      <path d="M200 50 C 244 92, 254 180, 240 288 L160 288 C 146 180, 156 92, 200 50 Z" fill="#fff" stroke="var(--ink)" stroke-width="5"/>
+      <path d="M200 50 C 216 64, 228 82, 234 100 L166 100 C 172 82, 184 64, 200 50 Z" fill="var(--berry)" stroke="var(--ink)" stroke-width="4"/>
+      <circle cx="200" cy="164" r="24" fill="var(--sky)" stroke="var(--ink)" stroke-width="5"/>
+      <text x="200" y="262" text-anchor="middle" font-family="Baloo 2, sans-serif" font-weight="800" font-size="44" fill="var(--pumpkin-deep)">S</text>
+    </g>`,
+  // Class info: an open book
+  book: `<ellipse cx="200" cy="350" rx="150" ry="12" fill="var(--line)"/>
+    <path d="M200 330 C 150 306, 90 306, 40 330 L40 160 C 90 136, 150 136, 200 160 C 250 136, 310 136, 360 160 L360 330 C 310 306, 250 306, 200 330 Z" fill="var(--pumpkin-deep)" stroke="var(--ink)" stroke-width="4"/>
+    <path d="M200 312 C 156 290, 100 290, 56 310 L56 150 C 100 128, 156 128, 200 150 Z" fill="#fff" stroke="var(--ink)" stroke-width="4"/>
+    <path d="M200 312 C 244 290, 300 290, 344 310 L344 150 C 300 128, 244 128, 200 150 Z" fill="#fff" stroke="var(--ink)" stroke-width="4"/>
+    <g stroke="var(--muted)" stroke-width="4" stroke-linecap="round" opacity=".5"><line x1="80" y1="180" x2="176" y2="176"/><line x1="80" y1="210" x2="176" y2="206"/><line x1="80" y1="240" x2="150" y2="238"/><line x1="224" y1="176" x2="320" y2="180"/><line x1="224" y1="206" x2="320" y2="210"/><line x1="224" y1="236" x2="296" y2="240"/></g>
+    <path class="flip" d="M200 312 C 244 290, 300 290, 344 310 L344 150 C 300 128, 244 128, 200 150 Z" fill="var(--chip)" stroke="var(--ink)" stroke-width="4"/>
+    <g font-family="Baloo 2, sans-serif" font-weight="800" font-size="46" text-anchor="middle">
+      <text class="floaty" x="130" y="120" fill="var(--pumpkin)">A</text><text class="floaty" style="animation-delay:1.3s" x="200" y="100" fill="var(--leaf)">b</text><text class="floaty" style="animation-delay:2.6s" x="270" y="120" fill="var(--berry)">c</text></g>`
+};
+const ART = {
+  trace: a => { const size = a.text.length <= 2 ? 96 : 66;
+    return `<line class="guide" x1="10" y1="34" x2="130" y2="34"/><line class="guide" x1="10" y1="72" x2="130" y2="72"/>
+      <line class="guide" x1="10" y1="110" x2="130" y2="110" style="stroke-dasharray:none;opacity:.35"/>
+      <text x="70" y="110" text-anchor="middle" font-family="Baloo 2, sans-serif" font-weight="800" font-size="${size}" class="trace-fill">${esc(a.text)}</text>
+      <text x="70" y="110" text-anchor="middle" font-family="Baloo 2, sans-serif" font-weight="800" font-size="${size}" class="trace">${esc(a.text)}</text>`; },
+  shapes: a => {
+    const draw = (k, cx, cy, s, attrs) => ({
+      square: `<rect x="${cx - s/2}" y="${cy - s/2}" width="${s}" height="${s}" rx="2" ${attrs}/>`,
+      rectangle: `<rect x="${cx - s*0.6}" y="${cy - s*0.36}" width="${s*1.2}" height="${s*0.72}" rx="2" ${attrs}/>`,
+      triangle: `<path d="M${cx} ${cy - s/2} L${cx + s/2} ${cy + s/2} L${cx - s/2} ${cy + s/2} Z" ${attrs}/>`,
+      circle: `<circle cx="${cx}" cy="${cy}" r="${s/2}" ${attrs}/>`,
+      oval: `<ellipse cx="${cx}" cy="${cy}" rx="${s*0.38}" ry="${s*0.56}" ${attrs}/>`
+    }[k]);
+    const fills = ["var(--sun)", "var(--leaf)", "var(--pumpkin)"];
+    let out = a.learned.map((k, i) => draw(k, 20 + i * 24, 118, 16, 'fill="var(--muted)" opacity=".35"')).join("");
+    const f = a.focus, pos = f.length === 1 ? [[70, 60]] : [[44, 58], [102, 58]], s = f.length === 1 ? 64 : 48;
+    out += f.map((k, i) => `<g class="${i % 2 ? "squ" : "wob"}">${draw(k, pos[i][0], pos[i][1], s, `fill="${fills[i % 3]}" stroke="var(--ink)" stroke-width="3"`)}</g>`).join("");
+    return out; },
+  colors: a => `<rect x="10" y="108" width="120" height="6" rx="3" fill="var(--muted)" opacity=".3"/>` +
+    a.colors.map((c, i) => `<circle class="hop" style="animation-delay:${i * .25}s" cx="${32 + i * 38}" cy="88" r="16" fill="${c}" stroke="var(--ink)" stroke-width="3"/>`).join("") +
+    a.colors.map((c, i) => `<circle cx="${32 + i * 38}" cy="36" r="6" fill="${c}"/>`).join(""),
+  senses: () => `<circle cx="70" cy="74" r="44" fill="var(--sun)" stroke="var(--ink)" stroke-width="3"/>
+    <ellipse cx="24" cy="74" rx="8" ry="12" fill="var(--sun)" stroke="var(--ink)" stroke-width="3"/><ellipse cx="116" cy="74" rx="8" ry="12" fill="var(--sun)" stroke="var(--ink)" stroke-width="3"/>
+    <g class="blink"><circle cx="54" cy="64" r="6" fill="var(--ink)"/><circle cx="86" cy="64" r="6" fill="var(--ink)"/></g>
+    <path d="M66 74 Q 70 84 74 74" stroke="var(--ink)" stroke-width="3" fill="none"/>
+    <path d="M52 92 Q 70 108 88 92" stroke="var(--ink)" stroke-width="4" fill="none" stroke-linecap="round"/>`,
+  apple: () => `<rect x="0" y="112" width="140" height="28" fill="var(--stem)" opacity=".35"/>
+    <g class="grow"><path d="M70 62 C 52 48, 30 58, 32 84 C 34 106, 56 120, 70 110 C 84 120, 106 106, 108 84 C 110 58, 88 48, 70 62 Z" fill="var(--berry)"/>
+    <path d="M70 62 C 70 54, 72 48, 78 42" stroke="var(--ink)" stroke-width="4" fill="none" stroke-linecap="round"/>
+    <path d="M76 48 C 86 36, 100 38, 104 44 C 96 54, 84 54, 76 48 Z" fill="var(--stem)"/>
+    <ellipse cx="50" cy="78" rx="5" ry="10" fill="#fff" opacity=".5"/></g>`,
+  pumpkin: () => `<rect x="0" y="112" width="140" height="28" fill="var(--stem)" opacity=".35"/>
+    <path class="vine" d="M10 112 C 30 96, 46 120, 62 104" fill="none" stroke="var(--stem)" stroke-width="4" stroke-linecap="round"/>
+    <g class="grow"><ellipse cx="58" cy="86" rx="20" ry="26" fill="var(--pumpkin-deep)"/><ellipse cx="82" cy="86" rx="20" ry="26" fill="var(--pumpkin-deep)"/>
+    <ellipse cx="70" cy="86" rx="20" ry="28" fill="var(--pumpkin)"/><rect x="66" y="54" width="8" height="10" rx="2" fill="var(--stem)"/></g>
+    <circle cx="112" cy="26" r="11" fill="var(--sun)"/>`,
+  light: () => `<rect x="62" y="96" width="16" height="40" fill="var(--ink)"/><rect x="44" y="14" width="52" height="88" rx="16" fill="var(--ink)"/>
+    <circle cx="70" cy="40" r="15" fill="var(--berry)" opacity=".3"/><circle class="lamp-g" cx="70" cy="76" r="15" fill="var(--leaf)"/>`,
+  heart: () => `<path class="beat" d="M70 116 C 22 84, 16 58, 30 42 C 44 26, 64 32, 70 50 C 76 32, 96 26, 110 42 C 124 58, 118 84, 70 116 Z" fill="var(--berry)" stroke="var(--ink)" stroke-width="3"/>`,
+  star: () => `<path class="spin-slow" d="M70 18 L84 52 L120 54 L92 76 L102 112 L70 92 L38 112 L48 76 L20 54 L56 52 Z" fill="var(--sun)" stroke="var(--ink)" stroke-width="3" stroke-linejoin="round"/>
+    <text x="70" y="78" text-anchor="middle" font-family="Baloo 2, sans-serif" font-weight="800" font-size="20" fill="var(--ink)">TK</text>`,
+  crayons: () => ["var(--berry)", "var(--sun)", "var(--leaf)", "#3A7BC8"].map((c, i) =>
+    `<g class="hop" style="animation-delay:${i * .2}s"><rect x="${22 + i * 26}" y="50" width="18" height="62" rx="2" fill="${c}" stroke="var(--ink)" stroke-width="3"/>
+     <path d="M${22 + i * 26} 50 L${31 + i * 26} 30 L${40 + i * 26} 50 Z" fill="${c}" stroke="var(--ink)" stroke-width="3" stroke-linejoin="round"/>
+     <rect x="${22 + i * 26}" y="66" width="18" height="8" fill="var(--ink)" opacity=".25"/></g>`).join("")
+};
+const art = a => `<svg viewBox="0 0 140 140">${ART[a.type](a)}</svg>`;
+const chantSvg = num => `<svg viewBox="0 0 64 64" aria-hidden="true"><text x="32" y="56" text-anchor="middle" font-family="Baloo 2, sans-serif" font-weight="800" font-size="60" class="trace-fill">${esc(num)}</text><text x="32" y="56" text-anchor="middle" font-family="Baloo 2, sans-serif" font-weight="800" font-size="60" class="trace">${esc(num)}</text></svg>`;
+
+function heroBlock({ title, sub, pills, next, artSvg, bubble, extra = "" }) {
+  return `<header class="hero"><div class="wrap hero-grid"><div>
+      <div class="eyebrow">Transitional Kindergarten · Room 2</div>
+      <h1>${title}</h1>${sub ? `<div class="sub">${sub}</div>` : ""}
+      <div class="week-line">${pills}</div>
+      ${next ? `<div class="next-up"><span class="dot"></span><div><div class="eyebrow">Next up</div><strong>${esc(next.ev.title)} · ${esc(next.st.label.toLowerCase())}</strong></div></div>` : ""}
+      ${extra}
+    </div>
+    <div class="hero-art" aria-hidden="true"><div class="speech">${esc(bubble)}</div><svg viewBox="0 0 400 400">${artSvg}</svg></div>
+  </div></header>`;
+}
+
+function renderWeek(w) {
+  const isLatest = w === LATEST;
+  const pills = `<span class="pill week">Week ${w.n}</span><span class="pill">${esc(w.dates)}</span><span class="pill">${esc(w.theme)}</span>` +
+    (isLatest ? "" : `<span class="pill old">Past week</span>`);
+  const hero = heroBlock({ title: `Ms. Hagan's <span class="tk">TK</span> News`, pills, next: nextEvent(),
+    artSvg: HEROES[w.art] || HERO_APPLE, bubble: w.bubble });
+
+  let nextMarked = false;
+  const events = w.events.map(ev => {
+    const s = parse(ev.d), st = statusFor(ev);
+    let cls = "ev" + (st.cls === "past" ? " past" : "");
+    if (st.cls !== "past" && !nextMarked) { cls += " next"; nextMarked = true; }
+    const dayText = ev.end ? `${s.getDate()}${ev.and ? " & " : "–"}${parse(ev.end).getDate()}` : s.getDate();
+    return `<li class="${cls}">
+      <div class="date-tile"><div class="mo">${MONTHS[s.getMonth()]}</div><div class="d${ev.end ? " range" : ""}">${dayText}</div></div>
+      <div class="ev-body"><h3>${esc(ev.title)}</h3>${ev.detail ? `<p>${esc(ev.detail)}</p>` : ""}${ev.todo ? `<span class="todo">📚 ${esc(ev.todo)}</span>` : ""}</div>
+      <span class="status ${st.cls === "past" ? "" : st.cls}">${st.label}</span></li>`;
+  }).join("");
+
+  const learning = w.learning.map(s => `<article class="subject${s.wide ? " wide" : ""}">
+      <div class="art" aria-hidden="true">${art(s.art)}</div>
+      <div><div class="eyebrow tag">${esc(s.name)}</div><h3>${esc(s.title)}</h3>
+        ${s.items ? `<ul>${s.items.map(i => `<li>${esc(i)}</li>`).join("")}</ul>` : ""}
+        ${s.text ? `<p>${esc(s.text)}</p>` : ""}
+        ${s.choices ? `<div class="choice-key"><span><i style="background:var(--leaf)"></i>Green choice</span><span><i style="background:var(--berry)"></i>Red choice</span></div>` : ""}
+      </div></article>`).join("");
+
+  const r = w.reminders;
+  const reminders = `<div class="panel"><div class="eyebrow">Reminders</div><h2>Don't forget</h2>
+    ${r.clock ? `<div class="clock-row"><svg class="clock" viewBox="0 0 100 100" aria-hidden="true"><circle cx="50" cy="50" r="44" fill="var(--sky)" stroke="var(--ink)" stroke-width="5"/><line x1="50" y1="50" x2="50" y2="78" stroke="var(--ink)" stroke-width="5" stroke-linecap="round"/><line class="hand-m" x1="50" y1="50" x2="50" y2="18" stroke="var(--pumpkin)" stroke-width="4" stroke-linecap="round"/><circle cx="50" cy="50" r="5" fill="var(--ink)"/></svg><div><div class="big-time">${esc(r.clock)}</div><div>${esc(r.clockNote)}</div></div></div>` : ""}
+    <ul class="plain">${r.items.map(i => `<li>${i}</li>`).join("")}</ul>
+    ${r.note ? `<div class="thanks">${esc(r.note)}</div>` : ""}</div>`;
+
+  let bi = 0;
+  const books = w.nook.filter(x => x.type === "book").map(b => ({ ...b, color: SPINES[bi++ % SPINES.length] }));
+  const heights = [150, 176, 140, 164, 128, 184];
+  const shelf = books.length ? `<div class="shelf">${books.map((b, i) => `<button type="button" class="book" style="background:${b.color};height:${heights[i % 6]}px" aria-label="${esc(b.title)}">${esc(b.title)}</button>`).join("")}</div>` : "";
+  let bj = 0;
+  const nookList = w.nook.map(x => {
+    if (x.type === "book") { const b = books[bj++]; return `<li><span class="sw" style="background:${b.color}"></span><span><strong>${esc(b.title)}</strong>${b.author ? ` <em>by ${esc(b.author)}</em>` : ""}</span></li>`; }
+    if (x.type === "song") return `<li><span class="sw" style="background:var(--sun);border-radius:50%"></span><span><span class="kind">Song</span><br>${esc(x.title)}</span></li>`;
+    if (x.type === "rhymes") return `<li style="display:block"><span class="kind">${esc(x.title)}</span><div class="rhymes">${x.list.map(t => `<span>${esc(t)}</span>`).join("")}</div></li>`;
+    if (x.type === "chant") return `<li class="chant">${chantSvg(x.num)}<div><span class="kind">Memorize #${esc(x.num)} chant</span><p>“${esc(x.text)}”</p></div></li>`;
+    if (x.type === "note") return `<li class="note"><span class="kind">${esc(x.title)}</span><br>${esc(x.text)}</li>`;
+    return "";
+  }).join("");
+  const nook = `<div class="panel"><div class="eyebrow">Book Nook</div><h2>On our shelf</h2>${shelf}<ul class="nook">${nookList}</ul></div>`;
+
+  const t = w.tidbit;
+  const tidbit = `<aside class="tidbit"><div>
+      <div class="eyebrow">${esc(t.eyebrow)}</div><h2>${esc(t.title)}</h2>
+      ${t.body ? `<p>${esc(t.body)}</p>` : ""}
+      ${t.chips ? `<div class="episodes">${t.chips.map(c => `<span>${esc(c)}</span>`).join("")}</div>` : ""}
+      ${t.quote ? `<blockquote>“${esc(t.quote)}”${t.cite ? `<cite>— ${esc(t.cite)}</cite>` : ""}</blockquote>` : (t.cite ? `<p><cite>— ${esc(t.cite)}</cite></p>` : "")}
+    </div>
+    <div style="display:grid;justify-items:center;gap:14px">
+      <svg class="heart" viewBox="0 0 64 64" aria-hidden="true"><path d="M32 56 C 6 38, 2 24, 10 14 C 18 4, 30 8, 32 18 C 34 8, 46 4, 54 14 C 62 24, 58 38, 32 56 Z" fill="var(--berry)"/></svg>
+      ${t.link ? `<a class="watch" href="${esc(t.link.href)}" target="_blank" rel="noopener">${esc(t.link.label)}</a>` : ""}
+    </div></aside>`;
+
+  return `${hero}
+    <section><div class="wrap"><div class="sec-head"><h2>Upcoming events</h2><span class="eyebrow">As listed in Week ${w.n}</span></div><ol class="timeline">${events}</ol></div></section>
+    <section><div class="wrap"><div class="sec-head"><h2>Our learning</h2><span class="eyebrow">This week in class</span></div><div class="learn">${learning}</div></div></section>
+    <section><div class="wrap duo">${reminders}${nook}</div></section>
+    <div class="wrap">${tidbit}</div>`;
+}
+
+function renderInfo() {
+  const hero = heroBlock({ title: `TK Info <span class="tk">Snapshot</span>`, sub: "Ms. Hagan ~ Room 2",
+    pills: `<span class="pill week">Class info</span><span class="pill">2026–27 school year</span>`,
+    artSvg: HEROES.book, bubble: "Welcome to Room 2!",
+    extra: `<div class="hello"><span>Send me a quick hello:</span><span class="addr" id="addr">${esc(INFO.email)}</span><button type="button" class="btn" id="copyAddr">Copy</button></div>` });
+  const wd = today.getDay();
+  const team = INFO.team.map(p => `<article class="person"><div class="avatar" style="background:${p.color}" aria-hidden="true">${p.initials}</div>
+      <div><div class="eyebrow role">${esc(p.role)}</div><h3>Meet ${esc(p.name)}</h3>${p.bio.map(b => `<p>${esc(b)}</p>`).join("")}
+      ${p.quote ? `<blockquote>“${esc(p.quote)}”</blockquote>` : ""}</div></article>`).join("");
+  const sched = INFO.schedule.map((s, i) => `<div class="day${wd === i + 1 ? " is-today" : ""}"><div class="dn">${s.day}</div>
+      <div class="what">${esc(s.what)}</div>${s.when ? `<div class="when">${esc(s.when)}</div>` : ""}<div class="note2">${s.note ? esc(s.note) : "&nbsp;"}</div></div>`).join("");
+  const supplies = INFO.supplies.map((s, i) => `<li><label><input type="checkbox" id="sup-${i}" data-i="${i}"><span>${esc(s)}</span></label></li>`).join("");
+  return `${hero}
+    <section><div class="wrap"><div class="sec-head"><h2>Meet the team</h2><span class="eyebrow">Room 2</span></div><div class="team">${team}</div></div></section>
+    <section><div class="wrap"><div class="sec-head"><h2>Specialist schedule</h2><span class="eyebrow">Dress for P.E. on Mon, Tue &amp; Fri</span></div><div class="sched-wrap"><div class="sched">${sched}</div></div></div></section>
+    <section><div class="wrap duo">
+      <div class="panel"><div class="eyebrow">Suggested school supplies</div><h2>Supply checklist</h2><ul class="supplies">${supplies}</ul></div>
+      <div class="panel"><div class="eyebrow">Ordering lunch</div><h2>Lunch &amp; snack</h2><ul class="plain">${INFO.lunch.map(l => `<li>${esc(l)}</li>`).join("")}</ul></div>
+    </div></section>`;
+}
+
+// ===== Navigation =====
+let sky = "leaves";
+const nav = document.getElementById("weeknav"), view = document.getElementById("view"), foot = document.getElementById("foot");
+const keys = [...WEEKS.map(w => "week-" + w.n), "info"];
+nav.innerHTML = [...WEEKS].reverse().map(w => `<button type="button" class="wk" data-k="week-${w.n}"><b>Week ${w.n}${w === LATEST ? ' <span class="new">· New</span>' : ""}</b><small>${esc(w.dates.replace(", 2026", ""))}</small></button>`).join("") +
+  `<button type="button" class="wk info" data-k="info"><b>Class info</b><small>Team, schedule, supplies</small></button>`;
+
+function show(k, scroll) {
+  if (!keys.includes(k)) k = "week-" + LATEST.n;
+  nav.querySelectorAll(".wk").forEach(b => b.toggleAttribute("aria-current", false));
+  const btn = nav.querySelector(`[data-k="${k}"]`); btn.setAttribute("aria-current", "page");
+  btn.scrollIntoView({ block: "nearest", inline: "nearest" });
+  if (k === "info") {
+    sky = "leaves";
+    view.innerHTML = renderInfo();
+    foot.textContent = "From the TK Info Snapshot · Ms. Hagan ~ Room 2";
+    wireInfo();
+  } else {
+    const w = WEEKS.find(x => "week-" + x.n === k);
+    sky = w.sky || "leaves";
+    view.innerHTML = renderWeek(w);
+    foot.textContent = `Shared from Ms. Hagan's weekly TK newsletter · Week ${w.n}, ${w.dates}`;
+  }
+  if (scroll) window.scrollTo({ top: 0, behavior: "smooth" });
+}
+nav.addEventListener("click", e => { const b = e.target.closest(".wk"); if (!b) return; history.replaceState(null, "", "#" + b.dataset.k); show(b.dataset.k, true); });
+window.addEventListener("hashchange", () => show(location.hash.slice(1), true));
+
+function wireInfo() {
+  const copy = document.getElementById("copyAddr");
+  copy.addEventListener("click", () => {
+    const done = () => { copy.textContent = "Copied"; setTimeout(() => copy.textContent = "Copy", 1600); };
+    const fallback = () => { const r = document.createRange(); r.selectNodeContents(document.getElementById("addr")); const s = getSelection(); s.removeAllRanges(); s.addRange(r); copy.textContent = "Selected"; };
+    try { navigator.clipboard.writeText(INFO.email).then(done, fallback); } catch (e) { fallback(); }
+  });
+  let saved = [];
+  try { saved = JSON.parse(localStorage.getItem("tk-supplies") || "[]"); } catch (e) {}
+  document.querySelectorAll(".supplies input").forEach(cb => {
+    cb.checked = saved.includes(+cb.dataset.i);
+    cb.addEventListener("change", () => {
+      const on = [...document.querySelectorAll(".supplies input")].filter(x => x.checked).map(x => +x.dataset.i);
+      try { localStorage.setItem("tk-supplies", JSON.stringify(on)); } catch (e) {}
+    });
+  });
+}
+
+show(location.hash.slice(1), false);
+
+// ===== Falling leaves =====
+(function () {
+  const c = document.getElementById("leaves"), ctx = c.getContext("2d");
+  if (matchMedia("(prefers-reduced-motion: reduce)").matches) { c.remove(); return; }
+  const colors = ["#EE7417", "#F4B227", "#CC3B33", "#8A5A2B"];
+  let W, H, leaves = [];
+  const resize = () => { W = c.width = innerWidth * devicePixelRatio; H = c.height = innerHeight * devicePixelRatio; };
+  resize(); addEventListener("resize", resize);
+  const make = init => ({ x: Math.random() * W, y: init ? Math.random() * H : -30, r: (6 + Math.random() * 7) * devicePixelRatio,
+    vy: (0.3 + Math.random() * 0.6) * devicePixelRatio, sway: Math.random() * 6.28, rot: Math.random() * 6.28, color: colors[Math.floor(Math.random() * colors.length)] });
+  for (let i = 0; i < (innerWidth < 640 ? 9 : 16); i++) leaves.push(make(true));
+  (function tick() {
+    ctx.clearRect(0, 0, W, H);
+    leaves.forEach((l, i) => {
+      l.sway += 0.015; l.y += l.vy; l.x += Math.sin(l.sway) * 0.6 * devicePixelRatio; l.rot += 0.01;
+      if (l.y > H + 30) leaves[i] = make(false);
+      ctx.save(); ctx.translate(l.x, l.y); ctx.rotate(l.rot);
+      if (sky === "stars") {
+        ctx.globalAlpha = 0.35 + 0.35 * Math.sin(l.sway * 3); ctx.fillStyle = "#F4B227"; const r = l.r * 0.8;
+        ctx.beginPath(); for (let k = 0; k < 8; k++) { const a = k * Math.PI / 4, rr = k % 2 ? r * 0.35 : r; ctx.lineTo(Math.cos(a) * rr, Math.sin(a) * rr); } ctx.closePath(); ctx.fill();
+      } else {
+        ctx.globalAlpha = 0.5; ctx.fillStyle = l.color;
+        ctx.beginPath(); ctx.moveTo(0, -l.r); ctx.quadraticCurveTo(l.r, 0, 0, l.r); ctx.quadraticCurveTo(-l.r, 0, 0, -l.r); ctx.fill();
+      }
+      ctx.restore();
+    });
+    requestAnimationFrame(tick);
+  })();
+})();
+</script>
+
+</body>
+</html>

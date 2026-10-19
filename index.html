@@ -3,7 +3,18 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="description" content="Ms. Hagan's weekly TK newsletter for Room 2.">
+<meta name="description" content="Ms. Hagan's weekly TK newsletter for Room 2: events, what we're learning, reminders and books.">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Ms. Hagan's TK News · Room 2">
+<meta property="og:description" content="This week's events, learning, reminders and Book Nook from Room 2.">
+<meta property="og:url" content="https://dovraty.github.io/room2/">
+<meta property="og:image" content="https://dovraty.github.io/room2/preview.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="theme-color" content="#EE7417">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
 <title>Ms. Hagan's TK News</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -13,7 +24,7 @@ html{color-scheme:light}body{margin:0}img{max-width:100%}[hidden]{display:none!i
 /* Layout: a classroom year in one page — week switcher on top, then each week as hero, dated timeline, subject "tables", shelf, small print. */
 :root {
   --bg: #EEF3EA; --card: #FFFFFF; --ink: #2B1D3A; --muted: #655A73; --line: #D9DFD3;
-  --pumpkin: #EE7417; --pumpkin-deep: #C85A0A; --leaf: #2F8A48; --berry: #CC3B33; --berry-deep: #9E2A24;
+  --pumpkin: #EE7417; --pumpkin-deep: #B04F08; --cta: #A94704; --cta-hover: #8A3A03; --ok: #237A3B; --tid-bg: #2B1D3A; --tid-fg: #F5F0F8; --leaf: #2F8A48; --berry: #CC3B33; --berry-deep: #9E2A24;
   --sun: #F4B227; --sky: #CFE3F2; --stem: #4E7A2F; --glow: #FFD45C; --chip: #F8EEDF;
   --font-display: "Baloo 2", "Trebuchet MS", system-ui, sans-serif;
   --font-body: "Atkinson Hyperlegible", "Segoe UI", system-ui, sans-serif;
@@ -22,13 +33,13 @@ html{color-scheme:light}body{margin:0}img{max-width:100%}[hidden]{display:none!i
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
     --bg: #1A1424; --card: #261E31; --ink: #F2ECF7; --muted: #B5AAC3; --line: #3A3047;
-    --pumpkin: #FF8A33; --pumpkin-deep: #E06A12; --leaf: #5CC274; --berry: #F06A60; --berry-deep: #C9463D;
+    --pumpkin: #FF8A33; --pumpkin-deep: #E06A12; --cta: #A94704; --cta-hover: #C25306; --ok: #237A3B; --tid-bg: #352A48; --tid-fg: #F5F0F8; --leaf: #5CC274; --berry: #F06A60; --berry-deep: #C9463D;
     --sun: #FFC94D; --sky: #2C2840; --stem: #7FB25A; --glow: #FFE07A; --chip: #3A2C24; color-scheme: dark;
   }
 }
 :root[data-theme="dark"] {
   --bg: #1A1424; --card: #261E31; --ink: #F2ECF7; --muted: #B5AAC3; --line: #3A3047;
-  --pumpkin: #FF8A33; --pumpkin-deep: #E06A12; --leaf: #5CC274; --berry: #F06A60; --berry-deep: #C9463D;
+  --pumpkin: #FF8A33; --pumpkin-deep: #E06A12; --cta: #A94704; --cta-hover: #C25306; --ok: #237A3B; --tid-bg: #352A48; --tid-fg: #F5F0F8; --leaf: #5CC274; --berry: #F06A60; --berry-deep: #C9463D;
   --sun: #FFC94D; --sky: #2C2840; --stem: #7FB25A; --glow: #FFE07A; --chip: #3A2C24; color-scheme: dark;
 }
 
@@ -140,8 +151,8 @@ section { padding-block: 30px; }
 .ev-body p { margin: 2px 0 0; color: var(--muted); }
 .todo { display: inline-block; margin-top: 6px; background: var(--chip); color: var(--ink); border-radius: 8px; padding: 2px 10px; font-weight: 700; font-size: .92rem; }
 .status { font-weight: 700; font-size: .85rem; border-radius: 999px; padding: 3px 12px; white-space: nowrap; background: var(--line); color: var(--muted); }
-.status.soon { background: var(--pumpkin); color: #fff; }
-.status.today { background: var(--leaf); color: #fff; }
+.status.soon { background: var(--cta); color: #fff; }
+.status.today { background: var(--ok); color: #fff; }
 
 .learn { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
 .subject { background: var(--card); border-radius: 22px; padding: 20px; display: grid; grid-template-columns: 140px 1fr; gap: 18px; align-items: center; }
@@ -208,7 +219,7 @@ section { padding-block: 30px; }
 .chant p { margin: 0; font-family: var(--font-hand); font-size: 1.3rem; line-height: 1.25; }
 .nook li.note { display: block; background: var(--sky); border-radius: 14px; padding: 10px 14px; }
 
-.tidbit { margin-block: 8px 36px; background: var(--ink); color: var(--bg); border-radius: 26px; display: grid; grid-template-columns: 1fr auto; gap: 24px; align-items: center; padding: 28px; }
+.tidbit { margin-block: 8px 36px; background: var(--tid-bg); color: var(--tid-fg); border-radius: 26px; display: grid; grid-template-columns: 1fr auto; gap: 24px; align-items: center; padding: 28px; }
 .tidbit > div:first-child { min-width: 0; }
 .tidbit .eyebrow { color: var(--sun); }
 .tidbit h2 { font-size: clamp(1.7rem, 4vw, 2.4rem); font-weight: 800; margin-top: 6px; }
@@ -216,9 +227,9 @@ section { padding-block: 30px; }
 .tidbit blockquote { margin: 14px 0 0; font-family: var(--font-hand); font-size: 1.45rem; line-height: 1.3; max-width: 40ch; }
 .tidbit cite { display: block; margin-top: 6px; font-style: normal; font-size: .9rem; opacity: .8; font-family: var(--font-body); }
 .episodes { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 14px; }
-.episodes span { background: color-mix(in srgb, var(--bg) 14%, transparent); border-radius: 999px; padding: 4px 12px; font-weight: 700; font-size: .92rem; }
-.watch { display: inline-flex; align-items: center; gap: 10px; background: var(--pumpkin); color: #fff; font-weight: 700; text-decoration: none; padding: 14px 20px; border-radius: 999px; white-space: nowrap; }
-.watch:hover { background: var(--pumpkin-deep); }
+.episodes span { background: rgba(255, 255, 255, .14); border-radius: 999px; padding: 4px 12px; font-weight: 700; font-size: .92rem; }
+.watch { display: inline-flex; align-items: center; gap: 10px; background: var(--cta); color: #fff; font-weight: 700; text-decoration: none; padding: 14px 20px; border-radius: 999px; white-space: nowrap; }
+.watch:hover { background: var(--cta-hover); }
 .heart { width: 64px; height: 64px; animation: beat 1.4s ease-in-out infinite; }
 @keyframes beat { 0%,100% { transform: scale(1); } 15% { transform: scale(1.15); } 30% { transform: scale(1); } 45% { transform: scale(1.1); } }
 
@@ -252,7 +263,11 @@ footer { padding-block: 0 40px; color: var(--muted); font-size: .9rem; text-alig
 @media (max-width: 860px) { .learn, .duo, .team { grid-template-columns: 1fr; } }
 @media (max-width: 640px) {
   .hero-grid { grid-template-columns: 1fr; }
-  .hero-art { max-width: 260px; order: -1; }
+  .hero-art { max-width: 300px; order: -1; aspect-ratio: auto; display: flex; flex-direction: column; align-items: center; gap: 4px; }
+  .hero-art svg { width: 240px; height: 240px; max-width: 100%; }
+  .speech { position: static; transform: rotate(-2deg); max-width: 100%; font-size: 1.15rem; text-align: center; }
+  .shelf { gap: 4px; padding-inline: 4px; }
+  .book { min-width: 0; padding: 10px 2px; font-size: .78rem; }
   .ev { grid-template-columns: 64px 1fr; }
   .date-tile { width: 64px; }
   .date-tile .d { font-size: 1.35rem; }

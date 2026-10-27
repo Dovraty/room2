@@ -140,6 +140,16 @@ nav, main { position: relative; z-index: 1; }
 @keyframes brush { from { transform: translateX(-10px); } to { transform: translateX(10px); } }
 .build { stroke-dasharray: 80; animation: build 5s ease-in-out infinite; }
 @keyframes build { 0% { stroke-dashoffset: 80; } 50%, 90% { stroke-dashoffset: 0; } 100% { stroke-dashoffset: 80; } }
+.climb { animation: climb 6s ease-in-out infinite; }
+@keyframes climb { 0% { transform: translateY(300px); } 45% { transform: translateY(120px); } 55% { transform: translateY(120px); } 62% { transform: translateY(320px); } 70%, 100% { transform: translateY(300px); } }
+.raindrop { animation: raindrop 1.6s linear infinite; }
+@keyframes raindrop { from { transform: translateY(-20px); opacity: 0; } 20% { opacity: 1; } to { transform: translateY(320px); opacity: 0; } }
+.note { transform-box: fill-box; animation: note 3s ease-in-out infinite; }
+@keyframes note { 0% { transform: translateY(10px); opacity: 0; } 30% { opacity: 1; } 100% { transform: translate(8px, -40px); opacity: 0; } }
+.walk { animation: walk 4s ease-in-out infinite alternate; }
+@keyframes walk { from { transform: translateX(-24px); } to { transform: translateX(24px); } }
+.zip { animation: zip 3s ease-in-out infinite; }
+@keyframes zip { 0%, 15% { transform: translateY(54px); } 60%, 100% { transform: translateY(0); } }
 .speech { position: absolute; top: 4%; right: 0; transform: rotate(6deg); background: var(--card); border: 2px solid var(--ink); border-radius: 18px; padding: 6px 14px; font-family: var(--font-hand); font-size: 1.4rem; color: var(--ink); max-width: 70%; }
 
 /* ---------- Sections ---------- */
@@ -577,6 +587,41 @@ const WEEKS = [
       body: "4 and 5 year olds experience rapid brain development, big emotions, and a strong urge for independence, yet their ability to process complex reasoning is still limited. Connection calms the nervous system. Before you enforce a rule, calm the nervous system and stop the power struggle.",
       tips: [["Try offering 2 choices", "“Would you like apples or carrots for your snack?”"], ["Use a When/Then statement", "“When you put your shoes on, then we can play outside.”"]],
       cite: "Raising Children Network" }
+  },
+  {
+    n: 11, dates: "Oct. 26–30, 2026", theme: "“I” Week", art: "spider", sky: "rain", bubble: "The itsy bitsy spider climbed up the water spout!",
+    events: [
+      { d: "2026-10-29", title: "Make-up Picture Day", detail: "For retakes" },
+      { d: "2026-10-30", title: "Halloween Parade", detail: "8:30–9:30 am", todo: "Wear a costume to school. Parents can change their child into play clothes after the parade at recess.", icon: "🎃" },
+      { d: "2026-10-30", title: "Halloween Party", detail: "12:00–1:00 pm" },
+      { d: "2026-11-02", title: "No school for students" },
+      { d: "2026-11-11", title: "No school", detail: "Veterans Day" },
+      { d: "2026-11-13", title: "Jog-A-Thon", detail: "TK time: 8:50 am" },
+      { d: "2026-11-20", title: "Pep Rally", detail: "8:30 am", todo: "Wear sports attire or a jersey", icon: "👕" }
+    ],
+    learning: [
+      { name: "Language Arts", title: "It's “I” Week!", art: { type: "trace", text: "Ii" },
+        items: ["Uppercase & lowercase letter “I”", "What starts with “I”? Practice how to write an uppercase and lowercase “Ii”.", "Songs: “Itsy Bitsy Spider” & “I Had a Little Turtle”"] },
+      { name: "Math", title: "Reviewing numbers 1–5", art: { type: "trace", text: "1-5" },
+        text: "We are reviewing numbers 1–5. We have a Halloween booklet that helps us practice identifying, writing, and valuing each number." },
+      { name: "Science", title: "Insects & instruments", art: { type: "bugs" }, text: "We're learning about insects and instruments!" },
+      { name: "SEL", title: "“I” is for independence!", art: { type: "zipper" },
+        text: "Students will have an “I Can Do It” classroom challenge for the week. We always praise them for doing life skills by themselves like zipping jackets and taking care of their belongings." }
+    ],
+    reminders: { eyebrow: "Holiday Cheer!", title: "Save the dates", items: [
+      "<b>Dec. 17:</b> Room 2's Winter Party from 10:00–11:00 am.",
+      "<b>Dec. 18:</b> TK Holiday Show at 1:00 pm in the MPR. Students wear holiday pajamas. Please sign in at the office and arrive early before the performance."
+    ] },
+    nook: [
+      { type: "book", title: "Inch by Inch", author: "Leo Lionni" },
+      { type: "book", title: "Mañana Iguana", author: "Ann Whitford Paul" },
+      { type: "book", title: "Should I Share My Ice Cream?", author: "Mo Willems" },
+      { type: "book", title: "Bugs Are Insects", author: "Anne Rockwell" },
+      { type: "song", title: "“Marvelous Music” from Caitie's Classroom" }
+    ],
+    tidbit: { eyebrow: "TK Tidbit", title: "Listen to the little stuff",
+      quote: "Listen earnestly to anything your child wants to tell you, no matter what. If you don't listen eagerly to the little stuff when they're little, they won't tell you the big stuff when they are big, because to them, it's always been big stuff.",
+      cite: "Catherine M. Wallace" }
   }
 ];
 
@@ -748,6 +793,20 @@ const HEROES = {
       <text x="200" y="244" text-anchor="middle" font-family="Baloo 2, sans-serif" font-weight="800" font-size="56" fill="#fff">T</text>
     </g>
     <g fill="#3A7BC8"><circle class="drip" cx="54" cy="190" r="6"/><circle class="drip" style="animation-delay:.5s" cx="54" cy="190" r="5"/></g>`,
+  // Week 11: "I" Week, Itsy Bitsy Spider
+  spider: `<circle cx="64" cy="74" r="34" fill="var(--sun)" class="shine"/>
+    <g class="raingrp" fill="#3A7BC8" opacity=".7">${[[60, 0], [120, .5], [250, .9], [300, .3], [90, 1.2], [350, .7]].map(([x, d]) => `<path class="raindrop" style="animation-delay:${d}s" d="M${x} 20 C ${x - 6} 32, ${x - 6} 40, ${x} 40 C ${x + 6} 40, ${x + 6} 32, ${x} 20 Z"/>`).join("")}</g>
+    <ellipse cx="200" cy="378" rx="120" ry="12" fill="var(--line)"/>
+    <path d="M170 90 L230 90 L230 300 C 230 330, 250 340, 290 340 L290 372 L250 372 C 200 372, 170 350, 170 300 Z" fill="var(--muted)" opacity=".35" stroke="var(--ink)" stroke-width="5" stroke-linejoin="round"/>
+    <rect x="160" y="78" width="80" height="20" rx="4" fill="var(--muted)" opacity=".5" stroke="var(--ink)" stroke-width="5"/>
+    <g class="climb">
+      <g stroke="#2B1D3A" stroke-width="5" stroke-linecap="round" fill="none">
+        <path class="antleg" d="M186 0 C 170 -10, 160 -6, 152 8"/><path class="antleg" d="M186 8 C 168 6, 158 14, 152 28"/><path class="antleg" style="animation-direction:alternate-reverse" d="M186 16 C 170 22, 164 32, 160 46"/>
+        <path class="antleg" style="animation-direction:alternate-reverse" d="M214 0 C 230 -10, 240 -6, 248 8"/><path class="antleg" d="M214 8 C 232 6, 242 14, 248 28"/><path class="antleg" style="animation-direction:alternate-reverse" d="M214 16 C 230 22, 236 32, 240 46"/></g>
+      <ellipse cx="200" cy="12" rx="22" ry="26" fill="#2B1D3A" stroke="var(--bg)" stroke-width="3"/>
+      <circle cx="192" cy="2" r="6" fill="#fff"/><circle cx="208" cy="2" r="6" fill="#fff"/><circle cx="193" cy="3" r="3" fill="#2B1D3A"/><circle cx="209" cy="3" r="3" fill="#2B1D3A"/>
+      <path d="M192 18 Q 200 24 208 18" stroke="#fff" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+    </g>`,
   // Class info: an open book
   book: `<ellipse cx="200" cy="350" rx="150" ry="12" fill="var(--line)"/>
     <path d="M200 330 C 150 306, 90 306, 40 330 L40 160 C 90 136, 150 136, 200 160 C 250 136, 310 136, 360 160 L360 330 C 310 306, 250 306, 200 330 Z" fill="var(--pumpkin-deep)" stroke="var(--ink)" stroke-width="4"/>
@@ -815,6 +874,17 @@ const ART = {
     <circle cx="60" cy="56" r="4" fill="var(--ink)"/><circle cx="80" cy="56" r="4" fill="var(--ink)"/><path d="M60 70 Q 70 80 80 70" stroke="var(--ink)" stroke-width="3" fill="none" stroke-linecap="round"/>
     ${STARS([[30, 30, 7], [112, 40, 6]])}
     <g class="brush"><rect x="84" y="88" width="50" height="10" rx="5" fill="var(--leaf)" stroke="var(--ink)" stroke-width="2"/><rect x="84" y="76" width="16" height="12" rx="2" fill="#fff" stroke="var(--ink)" stroke-width="2"/></g>`,
+  bugs: () => `<rect x="0" y="112" width="140" height="28" fill="var(--stem)" opacity=".35"/>
+    <g class="walk"><g stroke="var(--ink)" stroke-width="3" stroke-linecap="round"><line class="antleg" x1="40" y1="104" x2="32" y2="114"/><line class="antleg" style="animation-direction:alternate-reverse" x1="50" y1="106" x2="50" y2="116"/><line class="antleg" x1="60" y1="104" x2="68" y2="114"/></g>
+      <circle cx="30" cy="94" r="9" fill="var(--ink)"/><path d="M36 100 A 16 16 0 0 1 68 100 Z" fill="var(--berry)" stroke="var(--ink)" stroke-width="3"/>
+      <line x1="52" y1="84" x2="52" y2="100" stroke="var(--ink)" stroke-width="2"/><circle cx="44" cy="94" r="3" fill="var(--ink)"/><circle cx="60" cy="94" r="3" fill="var(--ink)"/></g>
+    <g fill="var(--ink)" font-family="Baloo 2, sans-serif" font-weight="800">
+      <text class="note" x="86" y="60" font-size="30">♪</text><text class="note" style="animation-delay:1s" x="108" y="48" font-size="26">♫</text><text class="note" style="animation-delay:2s" x="70" y="40" font-size="24">♪</text></g>
+    <rect x="92" y="74" width="34" height="30" rx="4" fill="var(--sun)" stroke="var(--ink)" stroke-width="3"/><line x1="92" y1="84" x2="126" y2="84" stroke="var(--ink)" stroke-width="2"/><line x1="92" y1="94" x2="126" y2="94" stroke="var(--ink)" stroke-width="2"/>`,
+  zipper: () => `<path d="M44 34 L58 26 L70 36 L82 26 L96 34 L118 52 L106 70 L98 62 L98 118 L42 118 L42 62 L34 70 L22 52 Z" fill="var(--pumpkin)" stroke="var(--ink)" stroke-width="3" stroke-linejoin="round"/>
+    <line x1="70" y1="36" x2="70" y2="118" stroke="var(--ink)" stroke-width="3" stroke-dasharray="3 3"/>
+    <g class="zip"><rect x="64" y="40" width="12" height="16" rx="3" fill="var(--sun)" stroke="var(--ink)" stroke-width="2.5"/></g>
+    <text x="70" y="136" text-anchor="middle" font-family="Baloo 2, sans-serif" font-weight="800" font-size="13" fill="var(--ink)">I can do it!</text>`,
   crayons: () => ["var(--berry)", "var(--sun)", "var(--leaf)", "#3A7BC8"].map((c, i) =>
     `<g class="hop" style="animation-delay:${i * .2}s"><rect x="${22 + i * 26}" y="50" width="18" height="62" rx="2" fill="${c}" stroke="var(--ink)" stroke-width="3"/>
      <path d="M${22 + i * 26} 50 L${31 + i * 26} 30 L${40 + i * 26} 50 Z" fill="${c}" stroke="var(--ink)" stroke-width="3" stroke-linejoin="round"/>
@@ -863,7 +933,7 @@ function renderWeek(w) {
       </div></article>`).join("");
 
   const r = w.reminders;
-  const reminders = `<div class="panel"><div class="eyebrow">Reminders</div><h2>Don't forget</h2>
+  const reminders = `<div class="panel"><div class="eyebrow">${esc(r.eyebrow || "Reminders")}</div><h2>${esc(r.title || "Don't forget")}</h2>
     ${r.clock ? `<div class="clock-row"><svg class="clock" viewBox="0 0 100 100" aria-hidden="true"><circle cx="50" cy="50" r="44" fill="var(--sky)" stroke="var(--ink)" stroke-width="5"/><line x1="50" y1="50" x2="50" y2="78" stroke="var(--ink)" stroke-width="5" stroke-linecap="round"/><line class="hand-m" x1="50" y1="50" x2="50" y2="18" stroke="var(--pumpkin)" stroke-width="4" stroke-linecap="round"/><circle cx="50" cy="50" r="5" fill="var(--ink)"/></svg><div><div class="big-time">${esc(r.clock)}</div><div>${esc(r.clockNote)}</div></div></div>` : ""}
     <ul class="plain">${r.items.map(i => `<li>${i}</li>`).join("")}</ul>
     ${r.note ? `<div class="thanks">${esc(r.note)}</div>` : ""}</div>`;
@@ -989,7 +1059,10 @@ show(location.hash.slice(1), false);
       l.sway += 0.015; l.y += l.vy; l.x += Math.sin(l.sway) * 0.6 * devicePixelRatio; l.rot += 0.01;
       if (l.y > H + 30) leaves[i] = make(false);
       ctx.save(); ctx.translate(l.x, l.y); ctx.rotate(l.rot);
-      if (sky === "stars") {
+      if (sky === "rain") {
+        ctx.globalAlpha = 0.35; ctx.fillStyle = "#3A7BC8"; ctx.rotate(-l.rot); const r = l.r * 0.6;
+        ctx.beginPath(); ctx.moveTo(0, -r * 1.6); ctx.quadraticCurveTo(r, 0, 0, r); ctx.quadraticCurveTo(-r, 0, 0, -r * 1.6); ctx.fill();
+      } else if (sky === "stars") {
         ctx.globalAlpha = 0.35 + 0.35 * Math.sin(l.sway * 3); ctx.fillStyle = "#F4B227"; const r = l.r * 0.8;
         ctx.beginPath(); for (let k = 0; k < 8; k++) { const a = k * Math.PI / 4, rr = k % 2 ? r * 0.35 : r; ctx.lineTo(Math.cos(a) * rr, Math.sin(a) * rr); } ctx.closePath(); ctx.fill();
       } else {

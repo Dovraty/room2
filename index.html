@@ -150,6 +150,17 @@ nav, main { position: relative; z-index: 1; }
 @keyframes walk { from { transform: translateX(-24px); } to { transform: translateX(24px); } }
 .zip { animation: zip 3s ease-in-out infinite; }
 @keyframes zip { 0%, 15% { transform: translateY(54px); } 60%, 100% { transform: translateY(0); } }
+.jackjump { animation: jackjump 1.6s ease-in-out infinite alternate; }
+@keyframes jackjump { 0%, 12% { transform: translate(-120px, 192px); } 50% { transform: translate(0, 0); } 88%, 100% { transform: translate(120px, 192px); } }
+.slide { animation: slide 3s linear infinite; }
+@keyframes slide { from { transform: translateX(0); } to { transform: translateX(-52px); } }
+.vote { animation: vote 3s ease-in infinite; }
+@keyframes vote { 0%, 20% { transform: translateY(-40px); opacity: 0; } 35% { opacity: 1; } 70% { transform: translateY(18px); opacity: 1; } 80%, 100% { transform: translateY(18px); opacity: 0; } }
+.handL { animation: handL .8s ease-in-out infinite; } .handR { animation: handR .8s ease-in-out infinite; }
+@keyframes handL { 0%, 100% { transform: translateX(-14px) rotate(-8deg); } 50% { transform: translateX(0); } }
+@keyframes handR { 0%, 100% { transform: translateX(14px) rotate(8deg); } 50% { transform: translateX(0); } }
+.burst { animation: burst .8s ease-out infinite; transform-origin: 70px 60px; }
+@keyframes burst { 0%, 40% { opacity: 0; transform: scale(.6); } 55% { opacity: 1; } 100% { opacity: 0; transform: scale(1.2); } }
 .speech { position: absolute; top: 4%; right: 0; transform: rotate(6deg); background: var(--card); border: 2px solid var(--ink); border-radius: 18px; padding: 6px 14px; font-family: var(--font-hand); font-size: 1.4rem; color: var(--ink); max-width: 70%; }
 
 /* ---------- Sections ---------- */
@@ -622,6 +633,41 @@ const WEEKS = [
     tidbit: { eyebrow: "TK Tidbit", title: "Listen to the little stuff",
       quote: "Listen earnestly to anything your child wants to tell you, no matter what. If you don't listen eagerly to the little stuff when they're little, they won't tell you the big stuff when they are big, because to them, it's always been big stuff.",
       cite: "Catherine M. Wallace" }
+  },
+  {
+    n: 12, dates: "Nov. 2–6, 2026", theme: "“N” Week", art: "nimble", bubble: "Jack be nimble, Jack be quick!",
+    events: [
+      { d: "2026-11-03", title: "Election Day", detail: "Get out and vote!" },
+      { d: "2026-11-11", title: "No school", detail: "Veterans Day" },
+      { d: "2026-11-13", title: "Jog-A-Thon", detail: "TK time: 8:50 am" },
+      { d: "2026-11-20", title: "Pep Rally", detail: "8:30 am", todo: "Wear sports attire or a jersey", icon: "👕" },
+      { d: "2026-11-23", end: "2026-11-27", title: "No school", detail: "Thanksgiving Break" },
+      { d: "2026-12-01", title: "TK Hearing and Vision Screening Tests" },
+      { d: "2026-12-03", title: "Reflections Gallery Night", detail: "5:00–6:30 pm" },
+      { d: "2026-12-18", title: "TK Holiday Winter Show", detail: "1:00 pm" }
+    ],
+    learning: [
+      { name: "Language Arts", title: "It's “N” Week!", art: { type: "trace", text: "Nn" },
+        items: ["Uppercase & lowercase letter “N”", "What starts with “N”? Practice how to write an uppercase and lowercase “Nn”.", "Songs: “B-I-N-G-O” and “Jack Be Nimble”"] },
+      { name: "Math", title: "Unit 3: Patterns", art: { type: "pattern" },
+        text: "We will dive into Unit 3: Patterns. Our first lesson will help students identify patterns in their lives. Our big focus will be an AB pattern." },
+      { name: "Social Studies", title: "Why voting matters", art: { type: "ballot" }, text: "We're talking about the importance of voting." },
+      { name: "SEL", title: "Jump, clap & follow along", art: { type: "clap" },
+        text: "Our songs are going to tie in following directions and gross motor skills with a jumping challenge and rhythm clapping. Music helps children practice SEL by engaging the brain's emotional and memory centers, building self-regulation, and encouraging connection with others." }
+    ],
+    reminders: { eyebrow: "Election Day!", title: "Get out and vote on Nov. 3!", items: [
+      "We've been holding “elections” at school to vote for the <b>favorite read aloud</b> in the library, <b>best decorated pumpkin</b>, and most popular <b>whole class reward prize</b>."
+    ], note: "“By involving your children in the voting process, you're teaching them that their voice matters and that they have a role in shaping the world they live in.” — First 5 Nevada" },
+    nook: [
+      { type: "book", title: "The Napping House", author: "Audrey Wood" },
+      { type: "book", title: "The Best Nest", author: "P.D. Eastman" },
+      { type: "book", title: "I Will Take a Nap!", author: "Mo Willems" },
+      { type: "book", title: "Noisy Night", author: "Mac Barnett" },
+      { type: "book", title: "10 Little Ninjas", author: "Miranda Paul" }
+    ],
+    tidbit: { eyebrow: "TK Tidbit · Featured book: Your Fantastic Elastic Brain", title: "Little brains grow fast",
+      quote: "Given that 90% of brain growth happens before 5 years old, it's important that children receive enough intellectual and social stimulation to help build the architecture of the brain.",
+      cite: "EdSource" }
   }
 ];
 
@@ -807,6 +853,22 @@ const HEROES = {
       <circle cx="192" cy="2" r="6" fill="#fff"/><circle cx="208" cy="2" r="6" fill="#fff"/><circle cx="193" cy="3" r="3" fill="#2B1D3A"/><circle cx="209" cy="3" r="3" fill="#2B1D3A"/>
       <path d="M192 18 Q 200 24 208 18" stroke="#fff" stroke-width="2.5" fill="none" stroke-linecap="round"/>
     </g>`,
+  // Week 12: "N" Week, Jack Be Nimble
+  nimble: `<ellipse cx="200" cy="378" rx="140" ry="12" fill="var(--line)"/>
+    <rect x="160" y="356" width="80" height="14" rx="7" fill="var(--sun)" stroke="var(--ink)" stroke-width="4"/>
+    <rect x="182" y="270" width="36" height="88" rx="6" fill="#fff" stroke="var(--ink)" stroke-width="4"/>
+    <line x1="200" y1="270" x2="200" y2="256" stroke="var(--ink)" stroke-width="3"/>
+    <g class="flame"><path d="M200 214 C 186 236, 188 256, 200 258 C 212 256, 214 236, 200 214 Z" fill="var(--pumpkin)"/><path d="M200 232 C 194 242, 195 252, 200 254 C 205 252, 206 242, 200 232 Z" fill="var(--sun)"/></g>
+    <g class="jackjump">
+      <g stroke="#2B1D3A" stroke-width="10" stroke-linecap="round" fill="none">
+        <path d="M188 150 L168 172 L150 168"/><path d="M212 150 L232 172 L252 168"/>
+        <path class="arms" d="M184 104 L156 78"/><path class="arms" d="M216 104 L244 78"/></g>
+      <rect x="180" y="96" width="40" height="58" rx="14" fill="var(--leaf)" stroke="#2B1D3A" stroke-width="4"/>
+      <circle cx="200" cy="72" r="26" fill="#E8C49A" stroke="#2B1D3A" stroke-width="4"/>
+      <path d="M176 66 C 178 44, 222 44, 224 66 C 214 58, 186 58, 176 66 Z" fill="#8A5A2B"/>
+      <circle cx="191" cy="74" r="3.5" fill="#2B1D3A"/><circle cx="209" cy="74" r="3.5" fill="#2B1D3A"/>
+      <path d="M190 84 Q 200 92 210 84" stroke="#2B1D3A" stroke-width="3" fill="none" stroke-linecap="round"/>
+    </g>`,
   // Class info: an open book
   book: `<ellipse cx="200" cy="350" rx="150" ry="12" fill="var(--line)"/>
     <path d="M200 330 C 150 306, 90 306, 40 330 L40 160 C 90 136, 150 136, 200 160 C 250 136, 310 136, 360 160 L360 330 C 310 306, 250 306, 200 330 Z" fill="var(--pumpkin-deep)" stroke="var(--ink)" stroke-width="4"/>
@@ -885,6 +947,16 @@ const ART = {
     <line x1="70" y1="36" x2="70" y2="118" stroke="var(--ink)" stroke-width="3" stroke-dasharray="3 3"/>
     <g class="zip"><rect x="64" y="40" width="12" height="16" rx="3" fill="var(--sun)" stroke="var(--ink)" stroke-width="2.5"/></g>
     <text x="70" y="136" text-anchor="middle" font-family="Baloo 2, sans-serif" font-weight="800" font-size="13" fill="var(--ink)">I can do it!</text>`,
+  pattern: () => { const cell = (x, i) => i % 2 ? `<path d="M${x} 52 L${x + 15} 80 L${x - 15} 80 Z" fill="var(--leaf)" stroke="var(--ink)" stroke-width="3" stroke-linejoin="round"/>` : `<circle cx="${x}" cy="66" r="14" fill="var(--sun)" stroke="var(--ink)" stroke-width="3"/>`;
+    return `<defs><clipPath id="patclip"><rect x="6" y="30" width="128" height="80" rx="10"/></clipPath></defs><g clip-path="url(#patclip)"><g class="slide">${Array.from({ length: 8 }, (_, i) => cell(26 + i * 26, i)).join("")}</g></g>
+      <g font-family="Baloo 2, sans-serif" font-weight="800" font-size="18" fill="var(--ink)" text-anchor="middle"><text x="44" y="122">A</text><text x="70" y="122">B</text><text x="96" y="122">A</text></g>`; },
+  ballot: () => `<g class="vote"><rect x="52" y="20" width="36" height="44" rx="3" fill="#fff" stroke="var(--ink)" stroke-width="3"/><path d="M60 42 L68 50 L82 32" stroke="var(--leaf)" stroke-width="4" fill="none" stroke-linecap="round" stroke-linejoin="round"/></g>
+    <rect x="30" y="72" width="80" height="50" rx="6" fill="#3A7BC8" stroke="var(--ink)" stroke-width="3"/><rect x="46" y="66" width="48" height="10" rx="3" fill="var(--ink)"/>
+    <text x="70" y="106" text-anchor="middle" font-family="Baloo 2, sans-serif" font-weight="800" font-size="18" fill="#fff">VOTE</text>`,
+  clap: () => `<g class="burst" stroke="var(--pumpkin)" stroke-width="4" stroke-linecap="round"><line x1="70" y1="22" x2="70" y2="10"/><line x1="44" y1="32" x2="36" y2="22"/><line x1="96" y1="32" x2="104" y2="22"/></g>
+    <g class="handL"><path d="M66 112 C 50 112, 42 96, 44 76 L46 50 C 47 44, 55 44, 56 50 L58 70 L58 40 C 59 34, 67 34, 67 40 L68 112 Z" fill="#E8C49A" stroke="var(--ink)" stroke-width="3" stroke-linejoin="round"/></g>
+    <g class="handR"><path d="M74 112 C 90 112, 98 96, 96 76 L94 50 C 93 44, 85 44, 84 50 L82 70 L82 40 C 81 34, 73 34, 73 40 L72 112 Z" fill="#E8C49A" stroke="var(--ink)" stroke-width="3" stroke-linejoin="round"/></g>
+    <text x="70" y="134" text-anchor="middle" font-family="Baloo 2, sans-serif" font-weight="800" font-size="13" fill="var(--ink)">clap, clap!</text>`,
   crayons: () => ["var(--berry)", "var(--sun)", "var(--leaf)", "#3A7BC8"].map((c, i) =>
     `<g class="hop" style="animation-delay:${i * .2}s"><rect x="${22 + i * 26}" y="50" width="18" height="62" rx="2" fill="${c}" stroke="var(--ink)" stroke-width="3"/>
      <path d="M${22 + i * 26} 50 L${31 + i * 26} 30 L${40 + i * 26} 50 Z" fill="${c}" stroke="var(--ink)" stroke-width="3" stroke-linejoin="round"/>

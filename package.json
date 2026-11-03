@@ -1,0 +1,13 @@
+{
+  "name": "room2",
+  "version": "1.0.0",
+  "description": "Ms. Hagan's weekly TK newsletter for Room 2",
+  "private": true,
+  "scripts": {
+    "build": "echo 'Static HTML site - no build needed'",
+    "dev": "npx serve ."
+  },
+  "dependencies": {
+    "@vercel/speed-insights": "^1.0.12"
+  }
+}

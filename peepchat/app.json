@@ -1,0 +1,48 @@
+{
+  "expo": {
+    "name": "PeepChat",
+    "slug": "peepchat",
+    "scheme": "peepchat",
+    "version": "0.1.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "userInterfaceStyle": "automatic",
+    "backgroundColor": "#0E0B0A",
+    "ios": {
+      "supportsTablet": false,
+      "bundleIdentifier": "app.peepchat.prototype",
+      "infoPlist": { "UIViewControllerBasedStatusBarAppearance": true }
+    },
+    "android": {
+      "package": "app.peepchat.prototype",
+      "edgeToEdgeEnabled": true,
+      "adaptiveIcon": {
+        "backgroundColor": "#0E0B0A",
+        "foregroundImage": "./assets/android-icon-foreground.png",
+        "backgroundImage": "./assets/android-icon-background.png",
+        "monochromeImage": "./assets/android-icon-monochrome.png"
+      },
+      "predictiveBackGestureEnabled": true
+    },
+    "web": {
+      "favicon": "./assets/favicon.png",
+      "output": "single",
+      "bundler": "metro"
+    },
+    "plugins": [
+      "expo-router",
+      "expo-font",
+      [
+        "expo-splash-screen",
+        {
+          "image": "./assets/splash-icon.png",
+          "imageWidth": 160,
+          "resizeMode": "contain",
+          "backgroundColor": "#F6F1EA",
+          "dark": { "image": "./assets/splash-icon.png", "backgroundColor": "#0E0B0A" }
+        }
+      ]
+    ],
+    "experiments": { "typedRoutes": false }
+  }
+}

@@ -1,0 +1,8 @@
+[
+  { "id": "n1", "kind": "live", "chatter": "marisol", "convo": "reveal", "title": "Marisol Vega just went live", "body": "with Dex Okafor · \"Season 4 reveal (without saying names)\"", "ago": "18m", "unread": true, "section": "Now" },
+  { "id": "n2", "kind": "heat", "chatter": "dex", "convo": "reveal", "title": "A chat you follow is heating up", "body": "48K peeping. Dex just dropped a hint: \"they arrive by boat.\"", "ago": "3m", "unread": true, "section": "Now" },
+  { "id": "n3", "kind": "poll", "chatter": "kiki", "convo": "lakehouse", "title": "Poll results are in", "body": "\"Marisol owes Kiki\" won with 54% of 113K votes.", "ago": "2d", "unread": false, "section": "Earlier" },
+  { "id": "n4", "kind": "scheduled", "chatter": "priya", "convo": "glasshouse-drop", "title": "Priya Lune scheduled a chat", "body": "Glasshouse drop countdown · Fri 8:00 PM with Marisol Vega", "ago": "5h", "unread": true, "section": "Now" },
+  { "id": "n5", "kind": "reply", "chatter": "jules", "convo": "afterhours", "title": "Your comment is the top reply", "body": "\"the plug is the real cast member\" · 1.2K likes in After Hours", "ago": "1d", "unread": false, "section": "Earlier" },
+  { "id": "n6", "kind": "live", "chatter": "jules", "convo": "afterhours", "title": "After Hours is live (audio)", "body": "Jules, Kiki and Dex are talking about the reunion that never aired", "ago": "34m", "unread": false, "section": "Now" }
+]

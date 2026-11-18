@@ -1,0 +1,41 @@
+{
+  "audience": [
+    { "id": "a1", "handle": "pedalboattruther", "hue": 205 },
+    { "id": "a2", "handle": "solsticeszn", "hue": 190 },
+    { "id": "a3", "handle": "glassjaw_gwen", "hue": 220 },
+    { "id": "a4", "handle": "ana.reads.chats", "hue": 175 },
+    { "id": "a5", "handle": "fly_on_my_wall", "hue": 235 },
+    { "id": "a6", "handle": "notmycousin", "hue": 200 },
+    { "id": "a7", "handle": "producerwatch", "hue": 215 },
+    { "id": "a8", "handle": "kikistan_eu", "hue": 185 }
+  ],
+  "comments": [
+    { "id": "c1", "by": "a1", "text": "The pedal boat has been missing for TWO seasons. Justice for the pedal boat.", "likes": 2814, "ago": "2m", "pinned": true,
+      "replies": [
+        { "id": "c1r1", "by": "a6", "text": "it's in a lake in my heart", "likes": 402, "ago": "1m" },
+        { "id": "c1r2", "by": "a3", "text": "someone check the S2 finale, you can see it behind the villa", "likes": 188, "ago": "1m" },
+        { "id": "c1r3", "by": "a5", "text": "this is the most important investigation of our time", "likes": 96, "ago": "now" }
+      ]
+    },
+    { "id": "c2", "by": "a2", "text": "Dex typing for 9 seconds and then sending one word is a whole genre", "likes": 1930, "ago": "3m", "replies": [
+        { "id": "c2r1", "by": "a4", "text": "the heartbeat dot going crazy while he types lmao", "likes": 210, "ago": "2m" }
+      ]
+    },
+    { "id": "c3", "by": "a7", "text": "Production is 100% texting him right now. You can see him stall.", "likes": 1204, "ago": "4m", "replies": [] },
+    { "id": "c4", "by": "a8", "text": "Marisol is carrying this chat on her back and I respect it", "likes": 744, "ago": "5m", "replies": [] },
+    { "id": "c5", "by": "a4", "text": "\"they arrive by boat\" is either the best hint ever or a lie", "likes": 512, "ago": "6m", "replies": [] }
+  ],
+  "incoming": [
+    { "by": "a5", "text": "NOT THE BOAT ARC" },
+    { "by": "a3", "text": "he said A boat. A. BOAT." },
+    { "by": "a2", "text": "my whole office is reading this over my shoulder" },
+    { "by": "a6", "text": "for legal reasons I am not his cousin" },
+    { "by": "a1", "text": "the boat was never recovered because it never left" },
+    { "by": "a8", "text": "Marisol's typing speed is a competitive sport" }
+  ],
+  "sideRooms": [
+    { "id": "s1", "name": "Theory corner", "about": "Mystery cast member deep dives", "members": 640, "last": "fly_on_my_wall: hear me out… the cousin IS the boat", "hot": true },
+    { "id": "s2", "name": "S2 rewatchers", "about": "Timestamps and receipts only", "members": 212, "last": "glassjaw_gwen: ep 4, 31:20, the boat is RIGHT THERE" },
+    { "id": "s3", "name": "Producers' table", "about": "We read between the lines", "members": 98, "last": "producerwatch: that pause was a phone call" }
+  ]
+}

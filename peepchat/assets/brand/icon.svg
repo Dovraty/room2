@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1024" height="1024">
+  <defs>
+    <radialGradient id="spot" cx="50%" cy="-5%" r="95%">
+      <stop offset="0" stop-color="#FFC46B" stop-opacity="0.42"/>
+      <stop offset="0.5" stop-color="#FFC46B" stop-opacity="0.08"/>
+      <stop offset="1" stop-color="#FFC46B" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="base" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#1E1712"/><stop offset="1" stop-color="#0E0B0A"/>
+    </linearGradient>
+  </defs>
+  <rect width="1024" height="1024" fill="url(#base)"/>
+  <rect width="1024" height="1024" fill="url(#spot)"/><g transform="translate(212 200) scale(6)">
+  <defs>
+    <radialGradient id="lens" cx="46%" cy="40%" r="60%">
+      <stop offset="0" stop-color="#FFC46B" stop-opacity="0.95"/>
+      <stop offset="0.55" stop-color="#FFC46B" stop-opacity="0.35"/>
+      <stop offset="1" stop-color="#FFC46B" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <circle cx="52" cy="46" r="26" fill="url(#lens)"/>
+  <circle cx="52" cy="46" r="33" stroke="#FFC46B" stroke-width="11" fill="none"/>
+  <path d="M24.5 62 C 23 76, 17 86, 8 93 C 22 92, 34 86, 41 77 Z" fill="#FFC46B"/>
+  <circle cx="43" cy="37" r="5.5" fill="#FFC46B" opacity="0.9"/></g></svg>

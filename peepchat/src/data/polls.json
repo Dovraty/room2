@@ -1,0 +1,43 @@
+{
+  "reveal-mystery": {
+    "question": "Who's the mystery cast member?",
+    "askedBy": "marisol",
+    "closesIn": 252,
+    "options": [
+      { "id": "o1", "label": "Dex's cousin (he's sweating)", "votes": 18420 },
+      { "id": "o2", "label": "The ex from Season 2", "votes": 9210 },
+      { "id": "o3", "label": "A pop star nobody expects", "votes": 5120 },
+      { "id": "o4", "label": "Nobody. It's a bluff.", "votes": 7680 }
+    ]
+  },
+  "roundtable-dj": {
+    "question": "Should Kiki be allowed to DJ?",
+    "askedBy": "priya",
+    "closesIn": 400,
+    "options": [
+      { "id": "o1", "label": "Yes, chaos is the brand", "votes": 4210 },
+      { "id": "o2", "label": "Only with a 3-minute song limit", "votes": 3330 },
+      { "id": "o3", "label": "Absolutely not", "votes": 980 }
+    ]
+  },
+  "afterhours-believe": {
+    "question": "Why did the reunion really get cancelled?",
+    "askedBy": "jules",
+    "closesIn": 180,
+    "options": [
+      { "id": "o1", "label": "Same outfit (Dex is right)", "votes": 6200 },
+      { "id": "o2", "label": "Kiki & the plug", "votes": 2900 },
+      { "id": "o3", "label": "Something they can't say", "votes": 900 }
+    ]
+  },
+  "lakehouse-apology": {
+    "question": "Who owes who an apology?",
+    "askedBy": "kiki",
+    "closesIn": 0,
+    "options": [
+      { "id": "o1", "label": "Marisol owes Kiki", "votes": 61200 },
+      { "id": "o2", "label": "Kiki owes Marisol", "votes": 22400 },
+      { "id": "o3", "label": "They both owe the boat", "votes": 30100 }
+    ]
+  }
+}

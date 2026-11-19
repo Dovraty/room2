@@ -107,7 +107,7 @@ input{font:inherit;color:inherit}
 .orb .prog{position:absolute;inset:-6px;border-radius:50%;background:conic-gradient(var(--glow) calc(var(--p,0)*1turn),transparent 0);-webkit-mask:radial-gradient(farthest-side,transparent calc(100% - 3px),#000 calc(100% - 3px));mask:radial-gradient(farthest-side,transparent calc(100% - 3px),#000 calc(100% - 3px))}
 .orb-hint{position:absolute;left:0;right:0;text-align:center;font-size:12px;color:var(--cream-2);z-index:8;transition:opacity .3s}
 /* welcome */
-.welcome-copy{position:absolute;top:96px;left:24px;right:24px;text-align:center;z-index:9;pointer-events:none;text-shadow:0 2px 18px rgba(110,30,40,.55),0 1px 2px rgba(80,20,30,.4)}
+.welcome-copy{position:absolute;top:84px;left:24px;right:24px;text-align:center;z-index:9;pointer-events:none;text-shadow:0 2px 18px rgba(110,30,40,.55),0 1px 2px rgba(80,20,30,.4)}
 .welcome-copy h2{margin:0;font-size:46px}
 .welcome-copy h2 .h-sans{font-family:var(--sans);font-size:37px}
 .welcome-copy p{margin:12px auto 0;max-width:30ch;font-size:14px;line-height:1.45;color:var(--cream-2)}
@@ -148,6 +148,17 @@ input{font:inherit;color:inherit}
 @keyframes spin{to{transform:rotate(360deg)}}
 /* app chrome */
 .topbar{display:flex;align-items:center;gap:10px}
+.logo{display:inline-flex;align-items:center;gap:9px;color:var(--cream);line-height:1}
+.logo svg{width:30px;height:30px;flex:none;filter:drop-shadow(0 2px 8px rgba(10,4,8,.35))}
+.logo .wm{font-family:var(--serif);font-size:27px;letter-spacing:-.01em;transform:translateY(1px)}
+.logo .wm em{font-style:italic;color:var(--glow)}
+.logo.lg svg{width:40px;height:40px}.logo.lg .wm{font-size:36px}
+.logo.ink{color:#2A1420}.logo.ink .wm em{color:#8A4A3A}
+.logo-board{display:grid;grid-template-columns:auto 1fr;gap:12px;align-items:stretch}
+.app-icon{width:92px;height:92px;border-radius:22px;display:grid;place-items:center;color:#F6ECE2;background:radial-gradient(90% 60% at 50% 0%,rgba(255,226,190,.5),transparent 70%),linear-gradient(180deg,#B9805C,#6E3640 60%,#2B1523);box-shadow:inset 0 0 0 1px rgba(255,236,224,.18),0 10px 30px rgba(0,0,0,.4)}
+.app-icon svg{width:56px;height:56px}
+.logo-tiles{display:grid;gap:8px}
+.logo-tiles div{border-radius:14px;display:flex;align-items:center;justify-content:center;padding:12px;border:1px solid var(--panel-line)}
 .brand{display:flex;align-items:center;gap:8px;font-weight:600;font-size:18px;letter-spacing:-.02em}
 .brand .dot{width:26px;height:26px}
 .live-pill{display:inline-flex;align-items:center;gap:6px;height:22px;padding:0 9px;border-radius:999px;background:rgba(229,72,77,.16);border:1px solid rgba(229,72,77,.55);color:#F3B6B3;font-size:10.5px;font-weight:600;letter-spacing:.12em;text-transform:uppercase}
@@ -302,11 +313,22 @@ input{font:inherit;color:inherit}
       </div>
       <div class="legend"><span>Bronze</span><span>Clay</span><span>Oxblood</span><span>Plum</span><span>Night</span><span>Bone</span></div>
     </div>
+    <div>
+      <div class="kicker" style="margin-bottom:10px">Logo</div>
+      <div class="logo-board">
+        <div class="app-icon" role="img" aria-label="PeepChat app icon"><svg viewBox="0 0 100 100" aria-hidden="true"><use href="#mark"/></svg></div>
+        <div class="logo-tiles">
+          <div style="background:linear-gradient(135deg,#3A1C2B,#120910)"><span class="logo" role="img" aria-label="PeepChat"><svg viewBox="0 0 100 100" aria-hidden="true"><use href="#mark"/></svg><span class="wm">Peep<em>Chat</em></span></span></div>
+          <div style="background:#F3E7DC"><span class="logo ink" role="img" aria-label="PeepChat"><svg viewBox="0 0 100 100" aria-hidden="true"><use href="#mark"/></svg><span class="wm">Peep<em>Chat</em></span></span></div>
+        </div>
+      </div>
+      <p class="tiny" style="margin-top:8px">The peephole mark: a lens whose ring grows a speech-bubble tail, set beside a serif wordmark with “Chat” in italic.</p>
+    </div>
     <div class="typepair"><b>front row</b><i>to the chat</i><small>Instrument Serif italic<br>Inter Tight</small></div>
     <ul class="changes">
       <li><b>Colour</b>Sunset gradient on welcome and sign-in; the app itself is dusk, a warm glow at the top fading to plum-black.</li>
       <li><b>Messages</b>The welcome screen drifts with overheard chat lines in frosted message bubbles. Drag one, or tap it to see which chat it’s from.</li><li><b>People</b>Serif monograms on muted tones, with a thin red ring when someone is live.</li>
-      <li><b>Type</b>A bold sans with a serif italic word for warmth (“Good evening, <i>Alex</i>”).</li>
+      <li><b>Type</b><span>A clean sans with a serif italic word for warmth (“Good evening, <i>Alex</i>”).</span></li>
       <li><b>Surfaces</b>Frosted glass sheets and pill buttons: cream for the main action, smoked glass for the second.</li>
       <li><b>Moments</b>Hold the peephole button to listen in to a live chat.</li>
     </ul>
@@ -333,7 +355,7 @@ input{font:inherit;color:inherit}
           <div class="sky"></div><div class="grain"></div>
           <div id="field" style="position:absolute;inset:0"></div>
           <div class="welcome-copy">
-            <div class="kicker" style="color:var(--cream-2);margin-bottom:14px">PeepChat</div><h2 class="display" style="font-size:50px">The conversation<br><em>is the show.</em></h2>
+            <div style="margin-bottom:22px"><span class="logo lg" role="img" aria-label="PeepChat"><svg viewBox="0 0 100 100" aria-hidden="true"><use href="#mark"/></svg><span class="wm">Peep<em>Chat</em></span></span></div><h2 class="display" style="font-size:50px">The conversation<br><em>is the show.</em></h2>
             <p>Live texts and voice notes between the people you follow. Read along in real time. Never interrupt.</p>
           </div>
           <button class="orb" id="orb" style="top:calc(100% - 334px)" aria-label="Hold to listen in to a live chat"><div class="prog"></div><svg viewBox="0 0 100 100"><use href="#mark"/></svg></button>
@@ -395,7 +417,7 @@ input{font:inherit;color:inherit}
           <div class="dusk"></div><div class="grain"></div>
           <div class="scroll" id="discoverScroll">
             <div class="topbar">
-              <div class="brand"><svg class="dot" viewBox="0 0 100 100"><use href="#mark"/></svg>PeepChat</div>
+              <span class="logo" role="img" aria-label="PeepChat"><svg viewBox="0 0 100 100" aria-hidden="true"><use href="#mark"/></svg><span class="wm">Peep<em>Chat</em></span></span>
               <div style="flex:1"></div>
               <button class="icon-btn" aria-label="Search"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="11" cy="11" r="6.5"/><path d="M16 16l4.5 4.5"/></svg></button>
               <button class="b" id="meBubble" style="width:42px;height:42px;position:relative" aria-label="Your profile"></button>
@@ -482,7 +504,7 @@ input{font:inherit;color:inherit}
 
 <svg width="0" height="0" style="position:absolute" aria-hidden="true">
   <defs>
-    <radialGradient id="lensG" cx="46%" cy="40%" r="60%"><stop offset="0" stop-color="#FFC58A" stop-opacity=".95"/><stop offset=".55" stop-color="#FFC58A" stop-opacity=".3"/><stop offset="1" stop-color="#FFC58A" stop-opacity="0"/></radialGradient>
+    <radialGradient id="lensG" cx="46%" cy="40%" r="60%"><stop offset="0" stop-color="#E2B583" stop-opacity=".95"/><stop offset=".55" stop-color="#E2B583" stop-opacity=".3"/><stop offset="1" stop-color="#E2B583" stop-opacity="0"/></radialGradient>
     <symbol id="mark" viewBox="0 0 100 100"><circle cx="52" cy="46" r="26" fill="url(#lensG)"/><circle cx="52" cy="46" r="33" stroke="currentColor" stroke-width="11" fill="none"/><path d="M24.5 62 C 23 76, 17 86, 8 93 C 22 92, 34 86, 41 77 Z" fill="currentColor"/><circle cx="43" cy="37" r="5.5" fill="currentColor"/></symbol>
   </defs>
 </svg>

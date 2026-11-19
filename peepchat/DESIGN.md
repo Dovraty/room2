@@ -110,11 +110,19 @@ Typing indicators are an **ECG pulse** in the typer's colour, beating with the l
 - `src/theme/index.ts` turns it into typed RN values (easings → `Easing.bezier`, type → font styles).
 - Components (`src/components/`): `ChatBubble` (stage / transcript / mine; first / continued; moment; reactions), `TypingPulse`, `StageNote`, `LiveBadge`, `ViewerCount`/`useTicker`, `ChatterAvatar` (aperture ring, glyph badge, live halo, speaking) & `AudienceAvatar`, `FollowButton`, `NotifyButton`, `PollCard`, `CommentItem` (threads), `SideRoomCard`, `GallerySheet`, `TabBar`, `Waveform`, `ReplayTimeline`, `Spotlight`, `PeepholeMark`, `Iris`, `ApertureTransition`, `Heartbeat`/`Halo`, `Skeleton`, `EmptyState`, `GlassButton`, `CastStrip`, `StageHeader`, convo cards.
 
-## 9. Research note
+## 9. Figma
+
+**[PeepChat — Design concept v0.1 (Footlights)](https://www.figma.com/design/FdyUo5xytSZIqleOZInRtg)**
+- *Screens · iPhone*: 14 key screens, dark and light, captured from the prototype.
+- *Design System · Footlights*: colour swatches bound to local variables, chatter palette, type specimens, motion notes.
+- Variables: `Color · Dark`, `Color · Light`, `Chatter · Dark`, `Chatter · Light`, `Space`, `Radius` (101 total, scoped, with code syntax pointing at the RN theme). The Starter plan allows one mode per collection, so dark and light are separate collections; on a paid plan, merge them into one collection with two modes.
+- 12 text styles (`PeepChat/hero` … `PeepChat/quote`).
+
+## 10. Research note
 
 Mobbin was connected but requires a paid plan, so no references were pulled. Patterns were drawn from general knowledge of live audio rooms, messaging apps, bottom-sheet comment layers and premium streaming discovery screens. No layouts, icons or assets were copied; all icons are custom SVG.
 
-## 10. Open design questions for product discovery
+## 11. Open design questions for product discovery
 
 1. **Replay navigation.** Is a replay "watched" (time-based playback, as prototyped) or "read" (scroll the transcript with the timeline as a minimap)? Probably both; which is the default?
 2. **Poll creation & ownership.** Can only chatters launch polls, or can the gallery propose them for chatters to approve? How many per chat before it becomes noise on the stage?
